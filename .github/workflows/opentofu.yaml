@@ -3,8 +3,8 @@ name: opentofu
 on:
   push: 
     branches: [ "main" ]
-  paths:
-    - 'opentofu'
+    paths:
+      - 'opentofu'
 
 defaults:
   run:
