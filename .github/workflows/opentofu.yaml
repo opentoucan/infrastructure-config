@@ -2,9 +2,9 @@ name: opentofu
 
 on:
   push: 
-    branches: [ "main" ]
+    branches: [ 'main' ]
     paths:
-      - 'opentofu'
+      - 'opentofu/**'
 
 defaults:
   run:
