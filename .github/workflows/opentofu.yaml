@@ -20,7 +20,7 @@ jobs:
             mongo: opentofu/mongo/**
   ci:
     runs-on: ubuntu-latest
-    if: ${{ needs.changes.outputs.workspaces == 'true' }}
+    if: ${{ needs.changes.outputs.workspaces != '' }} && ${{ needs.changes.outputs.workspaces != '[]' }}
     strategy:
       matrix:
         workspace: ${{ fromJSON(needs.changes.outputs.workspaces) }}
@@ -56,7 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     needs: [ci]
-    if: ${{ needs.changes.outputs.workspaces == 'true' }}
+    if: ${{ needs.changes.outputs.workspaces != '' }} && ${{ needs.changes.outputs.workspaces != '[]' }}
     strategy:
       matrix:
         workspace: ${{ fromJSON(needs.changes.outputs.workspaces) }}
