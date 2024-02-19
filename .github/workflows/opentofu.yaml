@@ -6,6 +6,12 @@ on:
     paths:
       - 'opentofu/**'
 
+env:
+  TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+  MONGODB_ATLAS_PUBLIC_KEY: ${{ secrets.MONGODB_ATLAS_PUBLIC_KEY }}
+  MONGODB_ATLAS_PRIVATE_KEY: ${{ secrets.MONGODB_ATLAS_PRIVATE_KEY }}
+  TF_VAR_TEAMS: ${{ secrets.TF_VAR_TEAMS }}
+
 jobs:
   changes:
     runs-on: ubuntu-latest
