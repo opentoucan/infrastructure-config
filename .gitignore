@@ -1,3 +1,2 @@
 opentofu/.terraform/*
-*.tfvars
 .envrc
