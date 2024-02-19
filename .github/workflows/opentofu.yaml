@@ -6,14 +6,26 @@ on:
     paths:
       - 'opentofu/**'
 
-defaults:
-  run:
-    working-directory: opentofu
-
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      workspaces: ${{ steps.filter.outputs.changes }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            mongo: opentofu/mongo
   ci:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        workspace: ${{ fromJSON(needs.changes.outputs.workspaces) }}
+    defaults:
+      run:
+        working-directory: opentofu/${{ matrix.workspace }}
     steps:
       - uses: actions/checkout@v3
       - uses: opentofu/setup-opentofu@v1
@@ -43,7 +55,12 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     needs: [ci]
-
+    strategy:
+      matrix:
+        workspace: ${{ fromJSON(needs.changes.outputs.workspaces) }}
+    defaults:
+      run:
+        working-directory: opentofu/${{ matrix.workspace }}
     steps:
       - uses: actions/checkout@v3
       - uses: opentofu/setup-opentofu@v1
