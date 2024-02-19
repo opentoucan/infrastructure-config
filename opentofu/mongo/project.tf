@@ -7,7 +7,7 @@ resource "mongodbatlas_project" "project" {
     for_each = each.value.rbac
     iterator = item
     content {
-      team_id    = lookup(tomap({for key, value in mongodbatlas_teams.team : value.name => value}), item.value.team_name).team_id
+      team_id    = lookup(tomap({ for key, value in mongodbatlas_teams.team : value.name => value }), item.value.team_name).team_id
       role_names = item.value.role_names
     }
   }
