@@ -1,1 +1,1 @@
-# OpenTofu configuration 
+# OpenTofu configuration
