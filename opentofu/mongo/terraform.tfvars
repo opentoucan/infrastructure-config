@@ -41,11 +41,3 @@ clusters = [
     provider_instance = "M2"
   }
 ]
-teams = {
-  devops-engineers = {
-    users = []
-  }
-  developers = {
-    users = []
-  }
-}
