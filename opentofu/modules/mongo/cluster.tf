@@ -6,12 +6,6 @@ resource "mongodbatlas_cluster" "cluster" {
   project_id   = mongodbatlas_project.project.id
   name         = each.value.name
   cluster_type = each.value.cluster_type
-  replication_specs {
-    num_shards = 1
-    regions_config {
-      region_name = each.value.region_name
-    }
-  }
   cloud_backup = each.value.provider_instance != "M0" ? each.value.cloud_backup : false
 
   # Provider Settings "block"
