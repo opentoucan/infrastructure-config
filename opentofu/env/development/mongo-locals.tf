@@ -10,12 +10,12 @@ locals {
   }]
   teams = {
     devops = {
-      role_names = "GROUP_OWNER"
-      users      = var.devops
+      role  = ["GROUP_OWNER"]
+      users = var.devops
     },
     developers = {
-      role_names = "GROUP_READ_ONLY"
-      users      = var.devops
+      roles = ["GROUP_READ_ONLY"]
+      users = var.devops
     }
   }
 }
