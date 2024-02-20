@@ -14,7 +14,6 @@ env:
   MONGODB_ATLAS_PUBLIC_KEY: ${{ secrets.MONGODB_ATLAS_PUBLIC_KEY }}
   MONGODB_ATLAS_PRIVATE_KEY: ${{ secrets.MONGODB_ATLAS_PRIVATE_KEY }}
   TF_VAR_teams: ${{ secrets.ATLAS_TEAMS }}
-  TF_VAR_ip_access_list: ${{ secrets.IP_ACCESS_LIST }}
 
 jobs:
   plan:
