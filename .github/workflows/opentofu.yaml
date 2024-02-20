@@ -24,8 +24,8 @@ jobs:
         id: filter
         with:
           filters: |
-            development: opentofu/env/development
-            production: opentofu/env/production
+            development: opentofu/env/development/**
+            production: opentofu/env/production/**
   ci:
     runs-on: ubuntu-latest
     needs: changes

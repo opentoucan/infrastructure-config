@@ -1,5 +1,5 @@
 variable "project_name" {
-  type = string
+  type        = string
   description = "Map of clusters with the key as the project name"
 }
 
