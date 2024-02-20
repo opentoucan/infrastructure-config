@@ -18,4 +18,5 @@ resource "mongodbatlas_cluster" "cluster" {
   provider_name               = each.value.provider_name
   provider_instance_size_name = each.value.provider_instance
   backing_provider_name       = each.value.backing_provider_name
+  provider_region_name        = each.value.region_name 
 }
