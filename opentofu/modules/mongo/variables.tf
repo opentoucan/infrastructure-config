@@ -5,11 +5,12 @@ variable "project_name" {
 
 variable "clusters" {
   type = list(object({
-    name              = string
-    region_name       = string
-    provider_name     = string
-    provider_instance = string
-    cluster_type      = string
+    name                  = string
+    region_name           = string
+    provider_name         = string
+    provider_instance     = string
+    cluster_type          = string
+    backing_provider_name = string
   }))
   description = "List of clusters to create within the project"
 }
