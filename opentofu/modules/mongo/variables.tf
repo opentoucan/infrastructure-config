@@ -24,3 +24,8 @@ variable "teams" {
   }))
   description = "List of teams with name and email addresses for users"
 }
+
+variable "ip_access_list" {
+  type        = list(string)
+  description = "IP Address list for accessing project"
+}

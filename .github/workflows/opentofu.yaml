@@ -12,6 +12,7 @@ env:
   MONGODB_ATLAS_PRIVATE_KEY: ${{ secrets.MONGODB_ATLAS_PRIVATE_KEY }}
   TF_VAR_devops: ${{ secrets.DEVOPS_EMAILS }}
   TF_VAR_developers: ${{ secrets.DEVELOPERS_EMAILS }}
+  TF_VAR_ip_access_list: ${{ secrets.IP_ACCESS_LIST }}
 
 jobs:
   changes:
