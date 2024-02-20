@@ -3,14 +3,11 @@ resource "mongodbatlas_project" "project" {
   org_id = data.mongodbatlas_roles_org_id.org.org_id
 
   dynamic "teams" {
-    for_each = {
-      for team in var.teams:
-      team.team_id => team
-    }
-
+    for_each = tomap(var.teams)
+    iterator = item
     content {
-      team_id    = each.key
-      role_names = each.value.roles
+      team_id    = item.key
+      role_names = item.value.roles
     }
   }
 }
