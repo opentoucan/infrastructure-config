@@ -6,8 +6,8 @@ resource "mongodbatlas_project" "project" {
     for_each = var.teams
 
     content {
-      team_id    = mongodbatlas_teams.team[each.key].team_id
-      role_names = teams.value.role_names
+      team_id    = mongodbatlas_teams.team[teams.key].team_id
+      role_names = var.teams[teams.key].roles
     }
   }
 }
