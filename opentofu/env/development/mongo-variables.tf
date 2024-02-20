@@ -12,6 +12,5 @@ variable "devops" {
 
 variable "ip_access_list" {
   type        = list(string)
-  sensitive   = true
   description = "IP Address list for accessing project"
 }
