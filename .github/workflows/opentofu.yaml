@@ -18,7 +18,8 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      workspaces: ${{ steps.filter.outputs.changes }}
+      environments: ${{ steps.filter.outputs.changes }}
+      global: ${{ steps.filter.outputs.global }}
     steps:
       - uses: actions/checkout@v3
       - uses: dorny/paths-filter@v3
@@ -27,16 +28,17 @@ jobs:
           filters: |
             development: opentofu/env/development/**
             production: opentofu/env/production/**
-  ci:
+            global: opentofu/env
+  plan:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ needs.changes.outputs.workspaces != '' }} && ${{ needs.changes.outputs.workspaces != '[]' }}
+    if: ${{ needs.changes.outputs.environments != '' }} && ${{ needs.changes.outputs.environments != '[]' }}
     strategy:
       matrix:
-        workspace: ${{ fromJSON(needs.changes.outputs.workspaces) }}
+        environment: ${{ fromJSON(needs.changes.outputs.environments) }}
     defaults:
       run:
-        working-directory: opentofu/env/${{ matrix.workspace }}
+        working-directory: opentofu/env/${{ matrix.environment }}
     steps:
       - uses: actions/checkout@v3
       - uses: opentofu/setup-opentofu@v1
@@ -62,17 +64,44 @@ jobs:
         id: plan
         run: tofu plan -no-color
 
-  deploy:
+  deploy-global:
     runs-on: ubuntu-latest
-    environment: ${{ matrix.workspace }}
-    needs: [changes, ci]
-    if: ${{ needs.changes.outputs.workspaces != '' }} && ${{ needs.changes.outputs.workspaces != '[]' }}
+    environment: global
+    needs: [changes, plan]
+    if: ${{ needs.changes.outputs.global == 'true' }}
     strategy:
       matrix:
-        workspace: ${{ fromJSON(needs.changes.outputs.workspaces) }}
+        environment: global
     defaults:
       run:
-        working-directory: opentofu/env/${{ matrix.workspace }}
+        working-directory: opentofu/env
+    steps:
+      - uses: actions/checkout@v3
+      - uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: 1.6.1
+          cli_config_credentials_hostname: 'sillock.scalr.io'
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: OpenTofu Init
+        id: init
+        run: tofu init
+
+      - name: OpenTofu Apply
+        id: apply
+        run: tofu apply -auto-approve -input=false 
+
+  deploy-environment:
+    runs-on: ubuntu-latest
+    environment: ${{ matrix.environment }}
+    needs: [changes, plan]
+    if: ${{ needs.changes.outputs.environments != '' }} && ${{ needs.changes.outputs.environments != '[]' }}
+    strategy:
+      matrix:
+        environment: ${{ fromJSON(needs.changes.outputs.environments) }}
+    defaults:
+      run:
+        working-directory: opentofu/env/${{ matrix.environment }}
     steps:
       - uses: actions/checkout@v3
       - uses: opentofu/setup-opentofu@v1
