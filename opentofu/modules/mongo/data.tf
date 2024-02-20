@@ -1,1 +1,1 @@
-data mongodbatlas_roles_org_id "org" {}
+data "mongodbatlas_roles_org_id" "org" {}
