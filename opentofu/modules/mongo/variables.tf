@@ -19,10 +19,9 @@ variable "clusters" {
 
 variable "teams" {
   type = map(object({
-    users = list(string)
-    roles = list(string)
+    roles   = list(string)
   }))
-  description = "List of teams with name and email addresses for users"
+  description = "List of teams with id and roles"
 }
 
 variable "ip_access_list" {

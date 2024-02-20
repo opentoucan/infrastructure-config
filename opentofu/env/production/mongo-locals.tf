@@ -9,14 +9,19 @@ locals {
     cluster_type          = "REPLICASET"
     cloud_backup          = true
   }]
-  teams = {
-    devops = {
+  team_roles = [
+    {
+      name  = "devops"
       roles = ["GROUP_OWNER"]
-      users = var.devops
     },
-    developers = {
+    {
+      name  = "developers"
       roles = ["GROUP_READ_ONLY"]
-      users = var.devops
     }
+  ]
+
+  teams = {
+    for index, val in local.team_roles:
+    lookup(tomap({ for key, value in data.terraform_remote_state.rs_opentoucan.outputs.teams : value.team_name => value }), val.name).team_id => val.roles
   }
 }
