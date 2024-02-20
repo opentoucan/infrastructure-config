@@ -1,28 +1,24 @@
-variable "projects" {
-  type = map(object({
-    rbac = list(object({
-      team_name  = string
-      role_names = list(string)
-    }))
-  }))
+variable "project_name" {
+  type = string
   description = "Map of clusters with the key as the project name"
 }
 
 variable "clusters" {
   type = list(object({
     name              = string
-    project_name      = string
     region_name       = string
     provider_name     = string
     provider_instance = string
+    cluster_type      = string
   }))
-  description = "Map of clusters with the key as the project name"
+  description = "List of clusters to create within the project"
 }
 
 
 variable "teams" {
   type = map(object({
     users = list(string)
+    roles = list(string)
   }))
   description = "List of teams with name and email addresses for users"
 }

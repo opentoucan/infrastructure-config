@@ -1,11 +1,11 @@
 resource "mongodbatlas_cluster" "cluster" {
   for_each = {
     for cluster in var.clusters :
-    "${cluster.project_name}-${cluster.name}" => cluster
+    cluster.name => cluster
   }
-  project_id   = lookup(tomap({ for key, value in mongodbatlas_project.project : value.name => value }), each.value.project_name).id
+  project_id   = mongodbatlas_project.project.id
   name         = each.value.name
-  cluster_type = "REPLICASET"
+  cluster_type = each.value.cluster_type
   replication_specs {
     num_shards = 1
     regions_config {
