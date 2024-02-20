@@ -22,6 +22,8 @@ locals {
 
   teams = {
     for index, val in local.team_roles :
-    lookup(tomap({ for key, value in data.terraform_remote_state.rs_opentoucan.outputs.mongo_teams : value.team_name => value }), val.name).team_id => val.roles
+    "${lookup(tomap({ for key, value in data.terraform_remote_state.rs_opentoucan.outputs.mongo_teams : value.team_name => value }), val.name).team_id}" => {
+      roles = val.roles
+    }
   }
 }
