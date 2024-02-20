@@ -11,6 +11,7 @@ variable "clusters" {
     provider_instance     = string
     cluster_type          = string
     backing_provider_name = string
+    cloud_backup          = bool
   }))
   description = "List of clusters to create within the project"
 }

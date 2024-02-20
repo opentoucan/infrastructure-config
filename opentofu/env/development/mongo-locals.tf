@@ -7,6 +7,7 @@ locals {
     backing_provider_name = "AZURE"
     provider_instance     = "M0"
     cluster_type          = "REPLICASET"
+    cloud_backup          = false
   }]
   teams = {
     devops = {
