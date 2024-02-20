@@ -5,6 +5,9 @@ on:
     branches: [ 'main' ]
     paths:
       - 'opentofu/env'
+    paths-ignore:
+      - 'opentofu/env/development/**'
+      - 'opentofu/env/production/**'
 
 env:
   TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
