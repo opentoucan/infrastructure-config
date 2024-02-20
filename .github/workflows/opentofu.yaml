@@ -69,9 +69,6 @@ jobs:
     environment: global
     needs: [changes, plan]
     if: ${{ needs.changes.outputs.global == 'true' }}
-    strategy:
-      matrix:
-        environment: global
     defaults:
       run:
         working-directory: opentofu/env
