@@ -1,5 +1,4 @@
 locals {
-  # Mongo configuration
   project_name = "development"
   clusters = [{
     name              = "discord-bot"
