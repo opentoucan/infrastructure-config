@@ -7,7 +7,7 @@ locals {
     backing_provider_name = "AZURE"
     provider_instance     = "M2"
     cluster_type          = "REPLICASET"
-    cloud_backup          = true
+    cloud_backup          = false
   }]
   team_roles = [
     {
