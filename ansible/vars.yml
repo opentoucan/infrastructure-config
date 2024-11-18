@@ -1,0 +1,24 @@
+postgresql_options:
+  - { name: listen_addresses,  value: "*" }
+  - { name: logging_collector, value: "off" }
+
+postgresql_databases: [production]
+
+postgresql_users:
+  - { db: production, name: user, password: "{{ vault_postgresql_production_user_password }}" }
+  - { db: production, name: migrator,  password: "{{ vault_postgresql_production_migrator_password }}"  }
+
+postgresql_schemas:
+  - { db: production, name: dotbot, owner: migrator }
+
+postgresql_privs:
+  - { db: production, roles: 'user', privs: 'SELECT,INSERT,UPDATE', type: database }
+  - { db: production, roles: migrator,  privs: ALL, type: database }
+
+postgresql_hba_entries:
+  - { contype: local, databases: all,    users: all,                        method: peer          }
+  - { contype: host,  databases: production, users: user,       address: all,   method: scram-sha-256 }
+  - { contype: host,  databases: production, users: migrator,   address: all,   method: scram-sha-256 }
+
+postgresql_extensions:
+  - { db: production, name: hstore }
