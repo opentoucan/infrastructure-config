@@ -43,6 +43,7 @@ jobs:
       - name: Generate backend config
         run: |
           cat <<EOF >> opentofu/${{ matrix.deployment }}.tfbackend
+          key = "${{ matrix.deployment }}.tfstate"
           endpoints = { s3 = "${S3_BACKEND_URL}" }
           region = "${S3_REGION}"
           bucket = "opentoucan-tfstate"
