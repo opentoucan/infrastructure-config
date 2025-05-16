@@ -42,12 +42,11 @@ jobs:
       - name: Generate backend config
         run: |
           cat <<EOF >> opentofu/${{ matrix.deployment }}.tfbackend
-          endpoints={s3="${S3_BACKEND_URL}" }
-          region=${S3_REGION}
-          bucket=opentoucan-tfstate
-          access_key=${S3_ACCESS_KEY}
-          secret_key=${S3_SECRET_KEY}
-          \n
+          endpoints = '{s3="${S3_BACKEND_URL}" }'
+          region = '${S3_REGION}'
+          bucket = 'opentoucan-tfstate'
+          access_key = '${S3_ACCESS_KEY}'
+          secret_key = '${S3_SECRET_KEY}'
           EOF
 
       - name: Generate secret.tfvars
