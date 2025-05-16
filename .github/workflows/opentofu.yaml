@@ -21,7 +21,8 @@ jobs:
       actions: read        # Required to identify workflow run.
       checks: write        # Required to add status summary.
       contents: read       # Required to checkout repository.
-      pull-requests: write # Required to add comment and label.
+      pull-requests: write # Required to add comment
+      issues: write        # Required to write labels
 
     strategy:
       fail-fast: false
@@ -52,10 +53,10 @@ jobs:
       - name: Generate secret.tfvars
         run: |
           cat <<EOF >> opentofu/secret.tfvars
-          mongodbatlas_public_key=${MONGODBATLAS_PUBLIC_KEY}
-          mongodbatlas_private_key=${MONGODBATLAS_PRIVATE_KEY}
-          s3_endpoint=${S3_BACKEND_URL}
-          environment=${{ matrix.deployment }}
+          mongodbatlas_public_key = "${MONGODBATLAS_PUBLIC_KEY}"
+          mongodbatlas_private_key = "${MONGODBATLAS_PRIVATE_KEY}"
+          s3_endpoint = "${S3_BACKEND_URL}"
+          environment = "${{ matrix.deployment }}"
           EOF
 
       - name: Provision TF
