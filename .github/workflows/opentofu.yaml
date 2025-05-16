@@ -57,6 +57,9 @@ jobs:
           mongodbatlas_public_key = "${MONGODBATLAS_PUBLIC_KEY}"
           mongodbatlas_private_key = "${MONGODBATLAS_PRIVATE_KEY}"
           s3_endpoint = "${S3_BACKEND_URL}"
+          s3_region   = "${S3_REGION}"
+          s3_access_key = "${S3_ACCESS_KEY}"
+          s3_secret_key = "${S3_SECRET_KEY}"
           environment = "${{ matrix.deployment }}"
           EOF
 
