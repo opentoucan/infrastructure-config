@@ -1,3 +1,8 @@
+variable "org_id" {
+  type        = string
+  description = "Organisation ID"
+}
+
 variable "project_name" {
   type        = string
   description = "Map of clusters with the key as the project name"
