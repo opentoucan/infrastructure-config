@@ -1,2 +1,2 @@
 # infrastructure-config
-Configuration for infrastructure for shared projects
+Infrastructure configuration for OpenToucan organisation
