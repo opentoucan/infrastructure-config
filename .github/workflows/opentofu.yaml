@@ -47,7 +47,7 @@ jobs:
           bucket=opentoucan-tfstate
           access_key=${S3_ACCESS_KEY}
           secret_key=${S3_SECRET_KEY}
-
+          \n
           EOF
 
       - name: Generate secret.tfvars
@@ -57,7 +57,7 @@ jobs:
           mongodbatlas_private_key=${MONGODBATLAS_PRIVATE_KEY}
           s3_endpoint=${S3_BACKEND_URL}
           environment=${{ matrix.deployment }}
-
+          \n
           EOF
 
       - name: Provision TF
