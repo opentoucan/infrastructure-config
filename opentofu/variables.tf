@@ -17,8 +17,8 @@ variable "mongodbatlas_private_key" {
 
 variable "mongodbatlas_team_roles" {
   type = list(object({
-    name = string
-    roles = list(string)
+    name      = string
+    roles     = list(string)
   }))
   description = "List of objects containing a team name and a list of roles to assign for a project"
 }
@@ -41,10 +41,27 @@ variable "mongo_atlas_clusters" {
   description = "List of clusters to create within the project"
 }
 
+variable "s3_access_key"{
+  type        = string
+  description = "Access key for authenticating against S3"
+  sensitive   = true
+}
+
+variable "s3_secret_key"{
+  type        = string
+  description = "Secret key for authenticating against S3"
+  sensitive   = true
+}
+
 variable "s3_endpoint" {
   type        = string
   description = "S3 endpoint url for creating bucket"
-  sensitive = true
+  sensitive   = true
+}
+
+variable "s3_region" {
+  type        = string
+  description = "Region for the S3 bucket"
 }
 
 variable "s3_server_ids" {
