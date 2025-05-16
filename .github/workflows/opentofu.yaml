@@ -57,7 +57,6 @@ jobs:
           mongodbatlas_private_key=${MONGODBATLAS_PRIVATE_KEY}
           s3_endpoint=${S3_BACKEND_URL}
           environment=${{ matrix.deployment }}
-          \n
           EOF
 
       - name: Provision TF
