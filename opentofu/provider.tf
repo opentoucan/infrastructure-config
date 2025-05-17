@@ -10,6 +10,10 @@ provider "minio" {
   minio_ssl      = true
 }
 
+provider "hcloud" {
+  token = var.hcloud_token
+}
+
 module "mongodb" {
   source         = "./modules/atlas-cluster"
   org_id         = data.mongodbatlas_roles_org_id.org.org_id
@@ -22,4 +26,14 @@ module "mongodb" {
 module "s3" {
   source       = "./modules/s3"
   bucket_names = local.s3_bucket_names
+}
+
+module "hetzner-vps" {
+  source         = "./modules/hetzner-vps"
+  server_name    = var.hcloud_server_name
+  server_image   = var.hcloud_server_image
+  server_type    = var.hcloud_server_type
+  server_backups = var.hcloud_server_backups
+  ssh_keys       = var.hcloud_ssh_keys
+  firewall_rules = var.hcloud_firewall_rules
 }

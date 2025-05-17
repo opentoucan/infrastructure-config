@@ -17,8 +17,8 @@ variable "mongodbatlas_private_key" {
 
 variable "mongodbatlas_team_roles" {
   type = list(object({
-    name      = string
-    roles     = list(string)
+    name  = string
+    roles = list(string)
   }))
   description = "List of objects containing a team name and a list of roles to assign for a project"
 }
@@ -41,13 +41,13 @@ variable "mongo_atlas_clusters" {
   description = "List of clusters to create within the project"
 }
 
-variable "s3_access_key"{
+variable "s3_access_key" {
   type        = string
   description = "Access key for authenticating against S3"
   sensitive   = true
 }
 
-variable "s3_secret_key"{
+variable "s3_secret_key" {
   type        = string
   description = "Secret key for authenticating against S3"
   sensitive   = true
@@ -65,9 +65,53 @@ variable "s3_region" {
 }
 
 variable "s3_server_ids" {
-  type        = list(object({
-    client    = string
-    id        = string
+  type = list(object({
+    client = string
+    id     = string
   }))
   description = "Map of clients and server IDs for creating S3 buckets"
+}
+
+variable "hcloud_token" {
+  type        = string
+  description = "API Token for Hetzner Cloud"
+  sensitive   = true
+}
+
+variable "hcloud_server_name" {
+  type        = string
+  description = "VPS server name"
+}
+
+variable "hcloud_server_image" {
+  type        = string
+  description = "OS Base image type"
+}
+
+variable "hcloud_server_type" {
+  type        = string
+  description = "Hetzner VPS server hardware tier"
+}
+
+variable "hcloud_server_backups" {
+  type        = bool
+  description = "Enable Hetzner server backups"
+  default     = false
+}
+
+variable "hcloud_ssh_keys" {
+  type = list(object({
+    name = string
+    key  = string
+  }))
+  description = "Public SSH Keys"
+}
+
+variable "hcloud_firewall_rules" {
+  type = list(object({
+    direction  = string
+    protocol   = string
+    port       = optional(string)
+    source_ips = list(string)
+  }))
 }
