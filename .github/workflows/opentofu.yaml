@@ -41,39 +41,30 @@ jobs:
         with:
           tofu_wrapper: false
 
-      - name: Generate backend config
-        run: |
-          cat <<EOF >> opentofu/${{ matrix.deployment }}.tfbackend
-          key = "${{ matrix.deployment }}.tfstate"
-          endpoints = { s3 = "${S3_BACKEND_URL}" }
-          region = "${S3_REGION}"
-          bucket = "opentoucan-tfstate"
-          access_key = "${S3_ACCESS_KEY}"
-          secret_key = "${S3_SECRET_KEY}"
-          EOF
-
-      - name: Generate secret.tfvars
-        run: |
-          cat <<EOF >> opentofu/secret.tfvars
-          mongodbatlas_public_key = "${MONGODBATLAS_PUBLIC_KEY}"
-          mongodbatlas_private_key = "${MONGODBATLAS_PRIVATE_KEY}"
-          s3_endpoint = "${S3_BACKEND_URL}"
-          s3_region   = "${S3_REGION}"
-          s3_access_key = "${S3_ACCESS_KEY}"
-          s3_secret_key = "${S3_SECRET_KEY}"
-          environment = "${{ matrix.deployment }}"
-          hcloud_token = "${HCLOUD_TOKEN}"
-          EOF
-
       - name: Provision TF
         uses: op5dev/tf-via-pr@v13
         with:
           working-directory: opentofu
           command: ${{ github.event_name == 'merge_group' && 'apply' || 'plan' }}
-          arg-backend-config: ${{ matrix.deployment }}.tfbackend
+          arg-backend-config: |
+            key="${{ matrix.deployment }}.tfstate",
+            endpoints={ s3 = "${S3_BACKEND_URL}" },
+            region="${S3_REGION}",
+            bucket="opentoucan-tfstate",
+            access_key="${S3_ACCESS_KEY}",
+            secret_key="${S3_SECRET_KEY}"
           arg-refresh: ${{ github.event_name == 'merge_group' && 'false' || 'true' }} # Skip refresh on apply.
           arg-lock: ${{ github.event_name == 'merge_group' }}
-          arg-var-file: env/${{ matrix.deployment }}.tfvars,secret.tfvars
+          arg-var-file: env/${{ matrix.deployment }}.tfvars
+          arg-var: |
+            mongodbatlas_public_key="${MONGODBATLAS_PUBLIC_KEY}",
+            mongodbatlas_private_key="${MONGODBATLAS_PRIVATE_KEY}",
+            s3_endpoint="${S3_BACKEND_URL}",
+            s3_region="${S3_REGION}",
+            s3_access_key="${S3_ACCESS_KEY}",
+            s3_secret_key="${S3_SECRET_KEY}",
+            environment="${{ matrix.deployment }}",
+            hcloud_token="${HCLOUD_TOKEN}"
           arg-workspace: ${{ matrix.deployment }}
           plan-encrypt: ${{ secrets.PASSPHRASE }}
           plan-parity: true # Prevents stale apply within merge queue.
