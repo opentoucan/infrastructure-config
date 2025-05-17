@@ -1,8 +1,8 @@
 provider "mongodbatlas" {}
 
 provider "minio" {
-  minio_region   = var.s3_bucket_region
-  minio_ssl      = true
+  minio_region = var.s3_bucket_region
+  minio_ssl    = true
 }
 
 provider "hcloud" {}
