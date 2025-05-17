@@ -29,6 +29,12 @@ variable "mongo_atlas_clusters" {
   description = "List of clusters to create within the project"
 }
 
+variable "s3_bucket_endpoint" {
+  type        = string
+  description = "S3 endpoint url for creating bucket"
+  sensitive   = true
+}
+
 variable "s3_bucket_region" {
   type        = string
   description = "Region for the S3 bucket"
