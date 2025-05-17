@@ -1,11 +1,11 @@
-mongo_atlas_clusters=[{
-    name                  = "discord-bot"
-    region_name           = "EUROPE_NORTH"
-    provider_name         = "TENANT"
-    backing_provider_name = "AZURE"
-    provider_instance     = "M0"
-    cluster_type          = "REPLICASET"
-    cloud_backup          = false
+mongo_atlas_clusters = [{
+  name                  = "discord-bot"
+  region_name           = "EUROPE_NORTH"
+  provider_name         = "TENANT"
+  backing_provider_name = "AZURE"
+  provider_instance     = "M0"
+  cluster_type          = "REPLICASET"
+  cloud_backup          = false
 }]
 mongodbatlas_team_roles = [
   {
@@ -24,7 +24,7 @@ mongodbatlas_ip_access_list = [
 s3_server_ids = [
   {
     client = "discord",
-    id = "409696112144810014"
+    id     = "409696112144810014"
   }
 ]
 
@@ -35,7 +35,7 @@ hcloud_server_backups = true
 hcloud_ssh_keys = [
   {
     name = "Jared"
-    key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHz/h+WzkR+AZYNvfzdbp/lUFIqdew+xErtSirm1XhPS"
+    key  = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHz/h+WzkR+AZYNvfzdbp/lUFIqdew+xErtSirm1XhPS"
   }
 ]
 hcloud_firewall_rules = [
@@ -46,8 +46,8 @@ hcloud_firewall_rules = [
     source_ips = ["0.0.0.0/0", "::/0"]
   },
   {
-    direction = "in"
-    protocol  = "icmp"
+    direction  = "in"
+    protocol   = "icmp"
     source_ips = ["0.0.0.0/0", "::/0"]
   },
   {

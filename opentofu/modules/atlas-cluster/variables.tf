@@ -24,7 +24,7 @@ variable "clusters" {
 
 variable "teams" {
   type = map(object({
-    roles   = list(string)
+    roles = list(string)
   }))
   description = "List of teams with id and roles"
 }
