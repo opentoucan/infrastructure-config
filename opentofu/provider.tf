@@ -1,9 +1,7 @@
 provider "mongodbatlas" {}
 
 provider "minio" {
-  minio_server   = "..."
-  minio_user     = "..."
-  minio_password = "..."
+  minio_server   = var.s3_bucket_endpoint
   minio_region   = var.s3_bucket_region
   minio_ssl      = true
 }
