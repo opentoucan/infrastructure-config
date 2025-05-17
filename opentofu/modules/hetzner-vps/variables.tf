@@ -9,7 +9,7 @@ variable "server_image" {
 }
 
 variable "server_type" {
-  type         = string
+  type        = string
   description = "Server hardware tier"
 }
 
@@ -20,7 +20,7 @@ variable "server_backups" {
 }
 
 variable "ssh_keys" {
-  type   = list(object({
+  type = list(object({
     name = string
     key  = string
   }))
@@ -29,9 +29,9 @@ variable "ssh_keys" {
 
 variable "firewall_rules" {
   type = list(object({
-      direction  = string
-      protocol   = string
-      port       = optional(string)
-      source_ips = list(string)
+    direction  = string
+    protocol   = string
+    port       = optional(string)
+    source_ips = list(string)
   }))
 }
