@@ -25,24 +25,3 @@ projects:
   import_requirements: [mergeable, approved, undiverged]
   execution_order_group: 1
   workflow: prod
-workflows:
-  prod:
-    plan:
-      steps:
-      - init
-      - plan:
-          extra_args: ["-var-file", "prod.tfvars"]
-    apply:
-      steps:
-        - apply:
-            extra_args: ["-var-file", "prod.tfvars"]
-    import:
-      steps:
-        - init
-        - import:
-            extra_args: ["-var-file", "prod.tfvars"]
-    state_rm:
-      steps:
-        - init
-        - state_rm:
-            extra_args: ["-lock=false"]
