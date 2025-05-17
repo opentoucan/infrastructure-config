@@ -21,7 +21,7 @@ mongodbatlas_ip_access_list = [
   "0.0.0.0/0"
 ]
 
-s3_server_ids = [
+s3_bucket_server_ids = [
   {
     client = "discord",
     id     = "409696112144810014"
