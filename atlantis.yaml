@@ -1,0 +1,48 @@
+version: 3
+automerge: true
+autodiscover:
+  mode: auto
+  ignore_paths:
+  - some/path
+delete_source_branch_on_merge: true
+parallel_plan: true
+parallel_apply: true
+abort_on_execution_order_fail: true
+projects:
+- name: prod
+  dir: opentofu
+  workspace: prod
+  terraform_distribution: opentofu
+  delete_source_branch_on_merge: true
+  repo_locks:
+    mode: on_plan
+  custom_policy_check: false
+  autoplan:
+    when_modified: ["*.tf", ".terraform.lock.hcl"]
+    enabled: true
+  plan_requirements: [mergeable, approved, undiverged]
+  apply_requirements: [mergeable, approved, undiverged]
+  import_requirements: [mergeable, approved, undiverged]
+  execution_order_group: 1
+  workflow: prod
+workflows:
+  prod:
+    plan:
+      steps:
+      - init
+      - plan:
+          extra_args: ["-var-file", "prod.tfvars"]
+    apply:
+      steps:
+        - apply:
+            extra_args: ["-var-file", "prod.tfvars"]
+    import:
+      steps:
+        - init
+        - import:
+            extra_args: ["-var-file", "prod.tfvars"]
+    state_rm:
+      steps:
+        - init
+        - state_rm:
+            extra_args: ["-lock=false"]
