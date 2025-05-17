@@ -1,18 +1,11 @@
-provider "mongodbatlas" {
-  public_key  = var.mongodbatlas_public_key
-  private_key = var.mongodbatlas_private_key
-}
+provider "mongodbatlas" {}
+
 provider "minio" {
-  minio_server   = var.s3_endpoint
-  minio_user     = var.s3_access_key
-  minio_password = var.s3_secret_key
-  minio_region   = var.s3_region
+  minio_region   = var.s3_bucket_region
   minio_ssl      = true
 }
 
-provider "hcloud" {
-  token = var.hcloud_token
-}
+provider "hcloud" {}
 
 module "mongodb" {
   source         = "./modules/atlas-cluster"

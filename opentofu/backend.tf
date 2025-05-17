@@ -1,13 +1,7 @@
 terraform {
   backend "s3" {
     bucket = "opentoucan-tfstate"
-    key    = "environment"
-    endpoints = {
-      s3 = "https://redacted"
-    }
-    access_key                  = "redacted"
-    secret_key                  = "redacted"
-    region                      = "fsn1"
+    key    = "<environment>"
     skip_credentials_validation = true
     skip_requesting_account_id  = true
     skip_metadata_api_check     = true
