@@ -6,5 +6,5 @@ locals {
     }
   }
 
-  s3_bucket_names = [for elem in var.s3_server_ids : format("%s-%s-%s", var.environment, elem.client, elem.id)]
+  s3_bucket_names = [for elem in var.s3_bucket_server_ids : format("%s-%s-%s", var.environment, elem.client, elem.id)]
 }

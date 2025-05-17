@@ -3,18 +3,6 @@ variable "environment" {
   description = "Environment name"
 }
 
-variable "mongodbatlas_public_key" {
-  type        = string
-  description = "Public key for authenticating against mongodb atlas"
-  sensitive   = true
-}
-
-variable "mongodbatlas_private_key" {
-  type        = string
-  description = "Private key for authenticating against mongodb atlas"
-  sensitive   = true
-}
-
 variable "mongodbatlas_team_roles" {
   type = list(object({
     name  = string
@@ -41,41 +29,17 @@ variable "mongo_atlas_clusters" {
   description = "List of clusters to create within the project"
 }
 
-variable "s3_access_key" {
-  type        = string
-  description = "Access key for authenticating against S3"
-  sensitive   = true
-}
-
-variable "s3_secret_key" {
-  type        = string
-  description = "Secret key for authenticating against S3"
-  sensitive   = true
-}
-
-variable "s3_endpoint" {
-  type        = string
-  description = "S3 endpoint url for creating bucket"
-  sensitive   = true
-}
-
-variable "s3_region" {
+variable "s3_bucket_region" {
   type        = string
   description = "Region for the S3 bucket"
 }
 
-variable "s3_server_ids" {
+variable "s3_bucket_server_ids" {
   type = list(object({
     client = string
     id     = string
   }))
   description = "Map of clients and server IDs for creating S3 buckets"
-}
-
-variable "hcloud_token" {
-  type        = string
-  description = "API Token for Hetzner Cloud"
-  sensitive   = true
 }
 
 variable "hcloud_server_name" {
