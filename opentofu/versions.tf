@@ -6,11 +6,11 @@ terraform {
     }
     minio = {
       source  = "aminueza/minio"
-      version = "3.3.0"
+      version = "3.5.2"
     }
     hcloud = {
       source  = "hetznercloud/hcloud"
-      version = "~> 1.45"
+      version = "1.50.1"
     }
   }
 }
