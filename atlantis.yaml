@@ -8,7 +8,7 @@ projects:
     dir: opentofu
     workspace: prod
     terraform_distribution: opentofu
-    delete_source_branch_on_merge: true
     autoplan:
-      enabled: false
+      enabled: true
+      when_modified: ["*.tf", "*.tfvars", "*.hcl"]
     workflow: prod
