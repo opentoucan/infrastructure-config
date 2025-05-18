@@ -1,4 +1,6 @@
-mongo_atlas_clusters = [{
+environment = "prod"
+
+mongodbatlas_clusters = [{
   name                  = "discord-bot"
   region_name           = "EUROPE_NORTH"
   provider_name         = "TENANT"
@@ -27,11 +29,14 @@ s3_bucket_server_ids = [
     id     = "409696112144810014"
   }
 ]
+s3_bucket_region = "fsn1"
+s3_bucket_domain = "your-objectstorage.com"
 
-hcloud_server_name    = "postgres"
-hcloud_server_image   = "debian-12"
-hcloud_server_type    = "cx22"
-hcloud_server_backups = true
+hcloud_server_location = "fsn1"
+hcloud_server_name     = "postgres"
+hcloud_server_image    = "debian-12"
+hcloud_server_type     = "cx22"
+hcloud_server_backups  = true
 hcloud_ssh_keys = [
   {
     name = "Jared"

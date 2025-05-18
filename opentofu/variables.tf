@@ -16,7 +16,7 @@ variable "mongodbatlas_ip_access_list" {
   description = "IP Address list for accessing project"
 }
 
-variable "mongo_atlas_clusters" {
+variable "mongodbatlas_clusters" {
   type = list(object({
     name                  = string
     region_name           = string
@@ -29,10 +29,9 @@ variable "mongo_atlas_clusters" {
   description = "List of clusters to create within the project"
 }
 
-variable "s3_bucket_endpoint" {
+variable "s3_bucket_domain" {
   type        = string
-  description = "S3 endpoint url for creating bucket"
-  sensitive   = true
+  description = "S3 domain for creating buckets"
 }
 
 variable "s3_bucket_region" {
@@ -46,6 +45,11 @@ variable "s3_bucket_server_ids" {
     id     = string
   }))
   description = "Map of clients and server IDs for creating S3 buckets"
+}
+
+variable "hcloud_server_location" {
+  type        = string
+  description = "Server location name such as nbg1, fsn1, hel1"
 }
 
 variable "hcloud_server_name" {

@@ -1,6 +1,11 @@
+variable "server_location" {
+  type        = string
+  description = "Hetzner server location"
+}
+
 variable "server_name" {
   type        = string
-  description = "VPS server name"
+  description = "Server name"
 }
 
 variable "server_image" {
