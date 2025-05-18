@@ -1,2 +1,5 @@
 **/.terraform/
 .envrc
+*_override.tf
+.local-state
+*.auto.tfvars
