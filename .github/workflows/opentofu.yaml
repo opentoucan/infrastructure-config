@@ -3,6 +3,8 @@
 name: "Opentofu"
 on:
   pull_request:
+    paths:
+      - opentofu/**
 
 jobs:
   tf:
