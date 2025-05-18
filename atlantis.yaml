@@ -10,5 +10,4 @@ projects:
     terraform_distribution: opentofu
     autoplan:
       enabled: true
-      when_modified: ["*.tf", "*.tfvars", "*.hcl"]
     workflow: prod
