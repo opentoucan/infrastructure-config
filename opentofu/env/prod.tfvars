@@ -33,7 +33,7 @@ s3_bucket_region = "fsn1"
 s3_bucket_domain = "your-objectstorage.com"
 
 hcloud_server_location = "fsn1"
-hcloud_server_name     = "postgres"
+hcloud_server_name     = "database-1"
 hcloud_server_image    = "debian-12"
 hcloud_server_type     = "cx22"
 hcloud_server_backups  = true
