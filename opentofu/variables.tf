@@ -3,22 +3,10 @@ variable "environment" {
   description = "Environment name"
 }
 
-variable "mongodbatlas_public_key" {
-  type        = string
-  description = "Public key for authenticating against mongodb atlas"
-  sensitive   = true
-}
-
-variable "mongodbatlas_private_key" {
-  type        = string
-  description = "Private key for authenticating against mongodb atlas"
-  sensitive   = true
-}
-
 variable "mongodbatlas_team_roles" {
   type = list(object({
-    name      = string
-    roles     = list(string)
+    name  = string
+    roles = list(string)
   }))
   description = "List of objects containing a team name and a list of roles to assign for a project"
 }
@@ -28,7 +16,7 @@ variable "mongodbatlas_ip_access_list" {
   description = "IP Address list for accessing project"
 }
 
-variable "mongo_atlas_clusters" {
+variable "mongodbatlas_clusters" {
   type = list(object({
     name                  = string
     region_name           = string
@@ -41,33 +29,63 @@ variable "mongo_atlas_clusters" {
   description = "List of clusters to create within the project"
 }
 
-variable "s3_access_key"{
+variable "s3_bucket_domain" {
   type        = string
-  description = "Access key for authenticating against S3"
-  sensitive   = true
+  description = "S3 domain for creating buckets"
 }
 
-variable "s3_secret_key"{
-  type        = string
-  description = "Secret key for authenticating against S3"
-  sensitive   = true
-}
-
-variable "s3_endpoint" {
-  type        = string
-  description = "S3 endpoint url for creating bucket"
-  sensitive   = true
-}
-
-variable "s3_region" {
+variable "s3_bucket_region" {
   type        = string
   description = "Region for the S3 bucket"
 }
 
-variable "s3_server_ids" {
-  type        = list(object({
-    client    = string
-    id        = string
+variable "s3_bucket_server_ids" {
+  type = list(object({
+    client = string
+    id     = string
   }))
   description = "Map of clients and server IDs for creating S3 buckets"
+}
+
+variable "hcloud_server_location" {
+  type        = string
+  description = "Server location name such as nbg1, fsn1, hel1"
+}
+
+variable "hcloud_server_name" {
+  type        = string
+  description = "VPS server name"
+}
+
+variable "hcloud_server_image" {
+  type        = string
+  description = "OS Base image type"
+}
+
+variable "hcloud_server_type" {
+  type        = string
+  description = "Hetzner VPS server hardware tier"
+}
+
+variable "hcloud_server_backups" {
+  type        = bool
+  description = "Enable Hetzner server backups"
+  default     = false
+}
+
+variable "hcloud_ssh_keys" {
+  type = list(object({
+    name = string
+    key  = string
+  }))
+  description = "Public SSH Keys"
+}
+
+variable "hcloud_firewall_rules" {
+  type = list(object({
+    direction  = string
+    protocol   = string
+    port       = optional(string)
+    source_ips = list(string)
+  }))
 }

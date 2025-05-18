@@ -5,8 +5,12 @@ terraform {
       version = "1.34.0"
     }
     minio = {
-      source = "aminueza/minio"
-      version = "3.3.0"
+      source  = "aminueza/minio"
+      version = "3.5.2"
+    }
+    hcloud = {
+      source  = "hetznercloud/hcloud"
+      version = "1.50.1"
     }
   }
 }
