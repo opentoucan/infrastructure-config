@@ -1,6 +1,7 @@
 terraform {
   backend "s3" {
     bucket                      = "opentoucan-tfstate"
+    key                         = "tofu.tfstate"
     skip_credentials_validation = true
     skip_requesting_account_id  = true
     skip_metadata_api_check     = true
