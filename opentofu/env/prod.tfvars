@@ -1,7 +1,7 @@
 environment = "prod"
 
 mongodbatlas_clusters = [{
-  name                  = "discord-bot"
+  name                  = "kotbot-bot"
   region_name           = "EUROPE_NORTH"
   provider_name         = "TENANT"
   backing_provider_name = "AZURE"
