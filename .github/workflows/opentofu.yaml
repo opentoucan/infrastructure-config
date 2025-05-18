@@ -27,7 +27,7 @@ jobs:
         id: init
         working-directory: opentofu
         run: |
-          tofu init -backend=false
+          tofu init -backend=false -upgrade
 
       - name: Tofu Validate
         id: validate
