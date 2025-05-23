@@ -38,8 +38,7 @@ module "hetzner-vps" {
 module "cloudflare-dns" {
   source  = "./modules/cloudflare-dns"
   name    = var.hcloud_server_name
-  zone_id = module.hetzner-vps.server_ip
   type    = "A"
   proxied = true
-  content = "opentoucan.com"
+  content = module.hetzner-vps.server_ip
 }

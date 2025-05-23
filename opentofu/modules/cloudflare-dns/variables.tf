@@ -8,11 +8,6 @@ variable "type" {
   description = "Record type i.e. A or CNAME"
 }
 
-variable "zone_id" {
-  type        = string
-  description = "Zone for the DNS record"
-}
-
 variable "ttl" {
   type        = number
   description = "Time To Live for the DNS record in seconds, defaults to 1 (automatic)"
