@@ -1,5 +1,5 @@
 resource "cloudflare_dns_record" "dns_record" {
-  zone_id = data.cloudflare_zone.opentoucan.id
+  zone_id = data.cloudflare_zone.opentoucan[0].id
   comment = var.comment
   content = var.content
   name    = var.name
