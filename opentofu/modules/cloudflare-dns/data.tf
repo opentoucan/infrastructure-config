@@ -1,5 +1,3 @@
 data "cloudflare_zones" "opentoucan" {
-  filter {
-    name = "opentoucan.com"
-  }
+  name = "opentoucan.com"
 }
