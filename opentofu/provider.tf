@@ -41,6 +41,5 @@ module "cloudflare-dns" {
   zone_id = module.hetzner-vps.server_ip
   type    = "A"
   proxied = true
-  comment = "Hetzner VPS"
   content = "opentoucan.com"
 }

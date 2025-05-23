@@ -20,17 +20,18 @@ variable "ttl" {
 }
 
 variable "content" {
-  type        = optional(string)
+  type        = string
   description = "Content of the DNS record (i.e. IP Address for A records and DNS name for CNAMES)"
   sensitive   = true
 }
 
 variable "comment" {
-  type        = optional(string)
+  type        = string
+  default     = null
   description = "Comments or notes about the DNS record"
 }
 
 variable "proxied" {
-  type        = optional(bool)
+  type        = bool
   description = "Whether to enable cloudflare proxying for the record"
 }
