@@ -8,6 +8,8 @@ provider "minio" {
 
 provider "hcloud" {}
 
+provider "cloudflare" {}
+
 module "mongodb" {
   source         = "./modules/atlas-cluster"
   org_id         = data.mongodbatlas_roles_org_id.org.org_id
@@ -31,4 +33,12 @@ module "hetzner-vps" {
   server_location = var.hcloud_server_location
   ssh_keys        = var.hcloud_ssh_keys
   firewall_rules  = var.hcloud_firewall_rules
+}
+
+module "cloudflare-dns" {
+  source  = "./modules/cloudflare-dns"
+  name    = var.hcloud_server_name
+  type    = "A"
+  proxied = true
+  content = module.hetzner-vps.server_ip
 }
