@@ -39,6 +39,6 @@ module "cloudflare-dns" {
   source  = "./modules/cloudflare-dns"
   name    = var.hcloud_server_name
   type    = "A"
-  proxied = true
+  proxied = false
   content = module.hetzner-vps.server_ip
 }
