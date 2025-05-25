@@ -10,4 +10,6 @@ resource "hcloud_server" "server" {
   }
   backups      = var.server_backups
   firewall_ids = [hcloud_firewall.firewall.id]
+  ssh_keys     = [for ssh_key in var.ssh_keys : ssh_key.name]
+  depends_on   = [hcloud_ssh_key.ssh_key]
 }
