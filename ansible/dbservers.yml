@@ -33,9 +33,8 @@
         update_cache: true
 
     - name: Create the cluster
-      ansible.builtin.command: pg_createcluster -u postgres {{ postgres_version }} {{ cluster_name }}
+      ansible.builtin.command: pg_createcluster -u postgres {{ postgres_version }} {{ cluster_name }} --start
       register: create_cluster
-      failed_when: "'Error: cluster configuration already exists' not in create_cluster.stderr"
 
     - name: Start and enable the service
       ansible.builtin.systemd:
@@ -94,7 +93,7 @@
 
     - name: Add entries to pg_hba
       community.postgresql.postgresql_pg_hba:
-        dest: "/var/lib/pgsql/data/pg_hba.conf"
+        dest: "/etc/postgresql/{{ postgres_version }}/{{ cluster_name }}/pg_hba.conf"
         address: "{{ item.address | default(omit) }}"
         contype: "{{ item.contype }}"
         databases: "{{ item.databases }}"
