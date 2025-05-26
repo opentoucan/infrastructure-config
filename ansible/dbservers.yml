@@ -1,7 +1,6 @@
 - hosts: postgres
 
   vars_files:
-    - vault.yml
     - vars.yml
 
   vars:

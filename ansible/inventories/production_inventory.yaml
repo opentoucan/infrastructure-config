@@ -1,5 +1,6 @@
+---
 all:
   children:
     postgres:
       hosts:
-        172.236.12.101:
+        postgres.opentoucan.com:
