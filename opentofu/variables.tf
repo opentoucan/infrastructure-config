@@ -39,12 +39,9 @@ variable "s3_bucket_region" {
   description = "Region for the S3 bucket"
 }
 
-variable "s3_bucket_server_ids" {
-  type = list(object({
-    client = string
-    id     = string
-  }))
-  description = "Map of clients and server IDs for creating S3 buckets"
+variable "s3_bucket_names" {
+  type = list(string)
+  description = "S3 bucket names"
 }
 
 variable "hcloud_server_location" {

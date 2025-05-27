@@ -1,4 +1,4 @@
-variable "bucket_names" {
-  type        = list(string)
-  description = "List of bucket names to create"
+variable "name" {
+  type        = string
+  description = "Name of S3 bucket"
 }

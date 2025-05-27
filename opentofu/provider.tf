@@ -20,8 +20,9 @@ module "mongodb" {
 }
 
 module "s3" {
+  for_each = var.s3_bucket_names
   source       = "./modules/s3"
-  bucket_names = local.s3_bucket_names
+  name = each.value.name
 }
 
 module "hetzner-vps" {
