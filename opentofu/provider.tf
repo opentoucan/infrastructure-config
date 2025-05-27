@@ -22,7 +22,7 @@ module "mongodb" {
 module "s3" {
   for_each = toset(var.s3_bucket_names)
   source   = "./modules/s3"
-  name     = each.value.name
+  name     = each.value
 }
 
 module "hetzner-vps" {
