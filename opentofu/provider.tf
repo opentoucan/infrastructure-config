@@ -20,9 +20,9 @@ module "mongodb" {
 }
 
 module "s3" {
-  for_each = var.s3_bucket_names
-  source       = "./modules/s3"
-  name = each.value.name
+  for_each = toset(var.s3_bucket_names)
+  source   = "./modules/s3"
+  name     = each.value.name
 }
 
 module "hetzner-vps" {

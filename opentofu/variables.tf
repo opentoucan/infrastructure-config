@@ -40,7 +40,7 @@ variable "s3_bucket_region" {
 }
 
 variable "s3_bucket_names" {
-  type = list(string)
+  type        = list(string)
   description = "S3 bucket names"
 }
 
