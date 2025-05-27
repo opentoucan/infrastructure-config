@@ -24,7 +24,7 @@ mongodbatlas_ip_access_list = [
 ]
 
 s3_bucket_names = [
-  "postgres-backup",
+  "opentoucan-postgres-backup",
   "prod-discord-409696112144810014"
 ]
 s3_bucket_region = "fsn1"
