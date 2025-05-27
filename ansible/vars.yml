@@ -5,6 +5,7 @@ postgresql_options:
 postgresql_databases: [production]
 
 postgresql_users:
+  - { db: production, name: postgres, password: "{{ lookup('ansible.builtin.env', 'POSTGRES_ADMIN_PASSWORD', default=undef()) }}" }
   - { db: production, name: user, password: "{{ lookup('ansible.builtin.env', 'POSTGRES_USER_PASSWORD', default=undef()) }}" }
   - { db: production, name: migrator,  password: "{{ lookup('ansible.builtin.env', 'POSTGRES_MIGRATOR_PASSWORD', default=undef()) }}"  }
 
@@ -12,8 +13,8 @@ postgresql_schemas:
   - { db: production, name: dotbot, owner: migrator }
 
 postgresql_privs:
-  - { db: production, roles: 'user', privs: 'SELECT,INSERT,UPDATE', objs: ALL_IN_SCHEMA }
-  - { db: production, roles: migrator,  privs: ALL, type: database }
+  - { db: production, roles: 'user', privs: 'SELECT,INSERT,UPDATE', objs: ALL_IN_SCHEMA, schema: dotbot }
+  - { db: production, roles: migrator,  privs: ALL, type: schema, objs: 'public,dotbot' }
 
 postgresql_hba_entries:
   - { contype: host,  databases: production, users: all,       address: 0.0.0.0/0,   method: scram-sha-256 }
