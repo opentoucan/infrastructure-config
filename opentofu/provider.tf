@@ -10,6 +10,8 @@ provider "hcloud" {}
 
 provider "cloudflare" {}
 
+provider "dns" {}
+
 module "mongodb" {
   source         = "./modules/atlas-cluster"
   org_id         = data.mongodbatlas_roles_org_id.org.org_id
@@ -33,7 +35,7 @@ module "hetzner-vps" {
   server_backups  = var.hcloud_server_backups
   server_location = var.hcloud_server_location
   ssh_keys        = var.hcloud_ssh_keys
-  firewall_rules  = var.hcloud_firewall_rules
+  firewall_rules  = local.hcloud_firewall_rules
 }
 
 module "cloudflare-dns" {

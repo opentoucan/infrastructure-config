@@ -86,3 +86,8 @@ variable "hcloud_firewall_rules" {
     source_ips = list(string)
   }))
 }
+
+variable "dns_access_list" {
+  type        = list(string)
+  description = "DNS record list for whitelisting access to restricted resources such as the Postgres database"
+}
