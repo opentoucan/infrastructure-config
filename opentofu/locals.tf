@@ -9,7 +9,7 @@ locals {
   s3_bucket_endpoint = "${var.s3_bucket_region}.${var.s3_bucket_domain}"
 
   ip_access_list = flatten({
-    for key in dns_access_list : key => [
+    for key in var.dns_access_list : key => [
       join(",", data.dns_a_record_set.access_ips[key].addrs)
     ]
   })
@@ -23,5 +23,5 @@ locals {
     }
   ]
 
-  hetzner_firewall_rules = setunion(var.hcloud_firewall_rules, local.hcloud_postgres_firewall_rules)
+  hcloud_firewall_rules = setunion(var.hcloud_firewall_rules, local.hcloud_postgres_firewall_rules)
 }

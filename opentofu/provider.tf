@@ -35,7 +35,7 @@ module "hetzner-vps" {
   server_backups  = var.hcloud_server_backups
   server_location = var.hcloud_server_location
   ssh_keys        = var.hcloud_ssh_keys
-  firewall_rules  = var.hcloud_firewall_rules
+  firewall_rules  = local.hcloud_firewall_rules
 }
 
 module "cloudflare-dns" {
