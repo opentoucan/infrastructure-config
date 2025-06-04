@@ -10,7 +10,7 @@ locals {
 
   ip_access_list = flatten([
     for key in var.dns_access_list :
-      data.dns_a_record_set.access_ips[key].addrs
+    data.dns_a_record_set.access_ips[key].addrs
   ])
 
   hcloud_postgres_firewall_rules = [
