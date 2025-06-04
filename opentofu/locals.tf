@@ -10,7 +10,7 @@ locals {
 
   ip_access_list = flatten([
     for key in var.dns_access_list :
-      join(",", data.dns_a_record_set.access_ips[key].addrs)
+      data.dns_a_record_set.access_ips[key].addrs
   ])
 
   hcloud_postgres_firewall_rules = [
@@ -18,7 +18,7 @@ locals {
       direction  = "in"
       protocol   = "tcp"
       port       = "5432"
-      source_ips = [local.ip_access_list]
+      source_ips = local.ip_access_list
     }
   ]
 
