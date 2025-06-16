@@ -1,0 +1,70 @@
+---
+postgres:
+  hosts:
+    molecule-postgres:
+  vars:
+    pgbackrest_conf_extra: ''
+    pgbackrest_repos: []
+    postgresql_version: '17'
+    cluster_name: molecule
+    postgresql_options:
+      - {name: listen_addresses, value: '*'}
+      - {name: logging_collector, value: off}
+    postgresql_databases: [molecule]
+    postgresql_users:
+      - {db: molecule, name: postgres, password: "molecule"}
+      - {db: molecule, name: user, password: "molecule"}
+      - {db: molecule, name: migrator, password: "molecule"}
+    postgresql_schemas:
+      - {db: molecule, name: dotbot, owner: migrator}
+    postgresql_privs:
+      - {db: molecule, roles: user, privs: 'SELECT,INSERT,UPDATE', objs: ALL_IN_SCHEMA,
+        schema: dotbot}
+      - {db: molecule, roles: migrator, privs: ALL, type: schema, objs: 'public,dotbot'}
+    postgresql_hba_entries:
+      - {contype: host, databases: molecule, users: all, address: 0.0.0.0/0, method: scram-sha-256}
+    postgresql_extensions:
+      - {db: molecule, name: hstore}
+
+    pgbackrest_owner: postgres
+    pgbackrest_group: postgres
+    pgbackrest_local_postgresql: "{{ 'pg' in group_names }}"
+    # https://pgbackrest.org/user-guide.html#replication
+    pgbackrest_restore_standby: false
+    pgbackrest_services_install: true
+    pgbackrest_timer_enabled: true
+    pgbackrest_timer_random_delay: 0
+    pgbackrest_spool_path: /var/spool/pgbackrest
+    pgbackrest_async_archive: false
+    pgbackrest_async_archive_process_max: 2
+    pgbackrest_global_config:
+      log-level-file: info
+      log-level-console: info
+      start-fast: y
+      delta: y
+    pgbackrest_stanzas:
+        - name: backup
+          pg_config:
+        # Local pg server
+            - path: "/var/lib/pgsql/{{ postgresql_version }}/data"
+          schedules:
+            - backup_type: full
+              oncalendar: 'Weekly'
+            - backup_type: diff
+              oncalendar: 'Daily'
+          extra:
+            backup-standby: "y"
+    pgbackrest_conf_extra: |
+      [global:archive-push]
+      compress-level=3
+    pgbackrest_repos:
+        # Backup to S3
+        - path: "/var/lib/pgbackrest"
+          retention-full: "7"
+          retention-diff: "3"
+          type: s3
+          s3-bucket: pgbackrest
+          s3-endpoint: localhost
+          s3-region: us-west-1
+          s3-key: "{{ lookup('ansible.builtin.env', 'S3_BACKUP_KEY', default=undef()) }}"
+          s3-key-secret: "{{ lookup('ansible.builtin.env', 'S3_BACKUP_SECRET', default=undef()) }}"

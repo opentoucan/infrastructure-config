@@ -3,3 +3,4 @@
 *_override.tf
 .local-state
 *.auto.tfvars
+ansible/**/.roles

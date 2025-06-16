@@ -1,0 +1,31 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: molecule-postgres
+    image: geerlingguy/docker-ubuntu2404-ansible:latest
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    cgroupns_mode: host
+    privileged: true
+    command: /lib/systemd/systemd
+    config:
+      requirements-file: requirements.yml
+
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+  inventory:
+    links:
+      hosts: ./inventory.yml
+  env:
+    POSTGRES_ADMIN_PASSWORD: molecule
+    POSTGRES_MIGRATOR_PASSWORD: molecule
+    POSTGRES_USER_PASSWORD: molecule
+    S3_BACKUP_KEY: admin
+    S3_BACKUP_SECRET: admin
+verifier:
+  name: ansible
