@@ -3,7 +3,7 @@
   hosts: postgres
   handlers:
     - name: Import Handlers
-      ansible.builtin.import_tasks: main.yml
+      ansible.builtin.import_tasks: ./handlers/main.yml
   tasks:
     - name: Task is running from within the role
       ansible.builtin.debug:
