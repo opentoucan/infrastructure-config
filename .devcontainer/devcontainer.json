@@ -1,0 +1,26 @@
+{
+  "name": "workspace",
+  "dockerFile": "Dockerfile",
+	"containerUser": "root",
+	"remoteUser": "root",
+  "runArgs": [
+		"--privileged",
+		"--cgroupns=host",
+    "--device",
+    "/dev/fuse",
+    "--hostname=ansible-dev-container"
+  ],
+	"overrideCommand": false,
+	"containerEnv": {
+		"LC_ALL": "C.UTF-8"
+	},
+	"mounts": [
+    "source=/sys/fs/cgroup,target=/sys/fs/cgroup,type=bind",
+		"source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+	],
+  "updateRemoteUserUID": true,
+	"features": {
+		"ghcr.io/devcontainers/features/python:1.7.1": {},
+		//"ghcr.io/devcontainers/features/docker-outside-of-docker:1.6.2": {}
+	}
+}
