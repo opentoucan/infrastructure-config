@@ -8,9 +8,6 @@ on:
 
 jobs:
   lint:
-    defaults:
-      run:
-        working-directory: ./ansible
     runs-on: ubuntu-latest
 
     steps:
@@ -21,7 +18,7 @@ jobs:
         run: pip install yamllint ansible-lint
 
       - name: Yamllint
-        run: yamllint .
+        run: yamllint . -c ../.yamllint.yaml
 
       - name: Ansible Lint
         run: ansible-lint .
@@ -40,7 +37,7 @@ jobs:
         run: pip install ansible molecule molecule-plugins[docker]
 
       - name: Syntax check playbook ${{ matrix.playbook }}
-        run: ansible-playbook --syntax-check ./playbooks/${{ matrix.playbook }}.yml -i ./inventories/main.yaml
+        run: ansible-playbook --syntax-check ./${{ matrix.playbook }}.yml -i ./inventories/main.yaml
 
       - name: Molecule tests
-        run: molecule test
+        run: cd ansible && molecule test

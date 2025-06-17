@@ -20,7 +20,7 @@ provisioner:
     name: ansible-lint
   inventory:
     links:
-      hosts: ./inventory.yml
+      hosts: ../../inventories/molecule.yml
   env:
     POSTGRES_ADMIN_PASSWORD: molecule
     POSTGRES_MIGRATOR_PASSWORD: molecule
