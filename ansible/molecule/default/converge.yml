@@ -49,4 +49,4 @@
         state: present
         update_cache: true
 
-- import_playbook: ../../postgres.yml
+- import_playbook: ../../playbooks/postgres.yml

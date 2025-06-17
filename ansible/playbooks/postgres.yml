@@ -1,7 +1,7 @@
 ---
 - hosts: postgres
   handlers:
-    - import_tasks: handlers/main.yml
+    - import_tasks: ../handlers/main.yml
   tasks:
   - name: Task is running from within the role
     ansible.builtin.debug:
@@ -163,7 +163,7 @@
     notify: reload systemd
 
   - name: Configure services and timers
-    include_tasks: tasks/configure-pgbackrest-services.yml
+    include_tasks: ../tasks/configure-pgbackrest-services.yml
     loop: "{{ range(1, pgbackrest_repos | length + 1) | list }}"
     loop_control:
       loop_var: repo
