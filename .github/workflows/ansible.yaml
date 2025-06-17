@@ -27,6 +27,9 @@ jobs:
         run: ansible-lint .
 
   validate-playbooks:
+    defaults:
+      run:
+        working-directory: ./ansible
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
