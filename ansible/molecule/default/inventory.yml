@@ -3,8 +3,6 @@ postgres:
   hosts:
     molecule-postgres:
   vars:
-    pgbackrest_conf_extra: ''
-    pgbackrest_repos: []
     postgresql_version: '17'
     cluster_name: molecule
     postgresql_options:
@@ -19,7 +17,7 @@ postgres:
       - {db: molecule, name: dotbot, owner: migrator}
     postgresql_privs:
       - {db: molecule, roles: user, privs: 'SELECT,INSERT,UPDATE', objs: ALL_IN_SCHEMA,
-        schema: dotbot}
+         schema: dotbot}
       - {db: molecule, roles: migrator, privs: ALL, type: schema, objs: 'public,dotbot'}
     postgresql_hba_entries:
       - {contype: host, databases: molecule, users: all, address: 0.0.0.0/0, method: scram-sha-256}
@@ -43,28 +41,28 @@ postgres:
       start-fast: y
       delta: y
     pgbackrest_stanzas:
-        - name: backup
-          pg_config:
-        # Local pg server
-            - path: "/var/lib/pgsql/{{ postgresql_version }}/data"
-          schedules:
-            - backup_type: full
-              oncalendar: 'Weekly'
-            - backup_type: diff
-              oncalendar: 'Daily'
-          extra:
-            backup-standby: "y"
+      - name: backup
+        pg_config:
+      # Local pg server
+          - path: "/var/lib/pgsql/{{ postgresql_version }}/data"
+        schedules:
+          - backup_type: full
+            oncalendar: 'Weekly'
+          - backup_type: diff
+            oncalendar: 'Daily'
+        extra:
+          backup-standby: "y"
     pgbackrest_conf_extra: |
       [global:archive-push]
       compress-level=3
     pgbackrest_repos:
-        # Backup to S3
-        - path: "/var/lib/pgbackrest"
-          retention-full: "7"
-          retention-diff: "3"
-          type: s3
-          s3-bucket: pgbackrest
-          s3-endpoint: localhost
-          s3-region: us-west-1
-          s3-key: "{{ lookup('ansible.builtin.env', 'S3_BACKUP_KEY', default=undef()) }}"
-          s3-key-secret: "{{ lookup('ansible.builtin.env', 'S3_BACKUP_SECRET', default=undef()) }}"
+      # Backup to S3
+      - path: "/var/lib/pgbackrest"
+        retention-full: "7"
+        retention-diff: "3"
+        type: s3
+        s3-bucket: pgbackrest
+        s3-endpoint: localhost
+        s3-region: us-west-1
+        s3-key: "{{ lookup('ansible.builtin.env', 'S3_BACKUP_KEY', default=undef()) }}"
+        s3-key-secret: "{{ lookup('ansible.builtin.env', 'S3_BACKUP_SECRET', default=undef()) }}"
