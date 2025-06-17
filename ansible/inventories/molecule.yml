@@ -3,26 +3,25 @@ postgres:
   hosts:
     molecule-postgres:
   vars:
-    postgresql_version: '17'
+    postgresql_version: "17"
     cluster_name: molecule
     postgresql_options:
-      - {name: listen_addresses, value: '*'}
-      - {name: logging_collector, value: off}
+      - { name: listen_addresses, value: "*" }
+      - { name: logging_collector, value: off }
     postgresql_databases: [molecule]
     postgresql_users:
-      - {db: molecule, name: postgres, password: "molecule"}
-      - {db: molecule, name: user, password: "molecule"}
-      - {db: molecule, name: migrator, password: "molecule"}
+      - { db: molecule, name: postgres, password: "molecule" }
+      - { db: molecule, name: user, password: "molecule" }
+      - { db: molecule, name: migrator, password: "molecule" }
     postgresql_schemas:
-      - {db: molecule, name: dotbot, owner: migrator}
+      - { db: molecule, name: dotbot, owner: migrator }
     postgresql_privs:
-      - {db: molecule, roles: user, privs: 'SELECT,INSERT,UPDATE', objs: ALL_IN_SCHEMA,
-         schema: dotbot}
-      - {db: molecule, roles: migrator, privs: ALL, type: schema, objs: 'public,dotbot'}
+      - { db: molecule, roles: user, privs: "SELECT,INSERT,UPDATE", objs: ALL_IN_SCHEMA, schema: dotbot }
+      - { db: molecule, roles: migrator, privs: ALL, type: schema, objs: "public,dotbot" }
     postgresql_hba_entries:
-      - {contype: host, databases: molecule, users: all, address: 0.0.0.0/0, method: scram-sha-256}
+      - { contype: host, databases: molecule, users: all, address: 0.0.0.0/0, method: scram-sha-256 }
     postgresql_extensions:
-      - {db: molecule, name: hstore}
+      - { db: molecule, name: hstore }
 
     pgbackrest_owner: postgres
     pgbackrest_group: postgres
@@ -43,13 +42,13 @@ postgres:
     pgbackrest_stanzas:
       - name: backup
         pg_config:
-      # Local pg server
+          # Local pg server
           - path: "/var/lib/pgsql/{{ postgresql_version }}/data"
         schedules:
           - backup_type: full
-            oncalendar: 'Weekly'
+            oncalendar: "Weekly"
           - backup_type: diff
-            oncalendar: 'Daily'
+            oncalendar: "Daily"
         extra:
           backup-standby: "y"
     pgbackrest_conf_extra: |

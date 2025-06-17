@@ -12,6 +12,8 @@
   loop: "{{ pgbackrest_stanzas }}"
   loop_control:
     label: "{{ item.name }}"
+  register: create_stanza
+  changed_when: create_stanza.rc != 0
   # molecule doesn't have postgres running
   when:
     - "'notest' not in ansible_skip_tags"
@@ -43,6 +45,8 @@
       loop: "{{ pgbackrest_stanzas }}"
       loop_control:
         label: "{{ item.name }}"
+      register: restore_postgres
+      changed_when: restore_postgres.rc != 0
       when:
         - "'recovery-option' in item.get('extra', {})"
 

@@ -1,12 +1,11 @@
 ---
-
 - name: Install scripts
   ansible.builtin.template:
     src: pgbackrest-backup.sh.j2
     dest: "/usr/local/bin/pgbackrest-{{ cluster_name }}-{{ backup_type }}-repo{{ repo }}"
     owner: root
     group: root
-    mode: '0755'
+    mode: "0755"
   vars:
     cluster_name: "{{ item.0.name }}"
     backup_type: "{{ item.1.backup_type }}"
@@ -20,7 +19,7 @@
     dest: "/etc/systemd/system/pgbackrest-{{ cluster_name }}-{{ backup_type }}-repo{{ repo }}.service"
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
   vars:
     cluster_name: "{{ item.0.name }}"
     backup_type: "{{ item.1.backup_type }}"
@@ -35,7 +34,7 @@
     dest: "/etc/systemd/system/pgbackrest-{{ cluster_name }}-{{ backup_type }}-repo{{ repo }}.timer"
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
   vars:
     cluster_name: "{{ item.0.name }}"
     backup_type: "{{ item.1.backup_type }}"

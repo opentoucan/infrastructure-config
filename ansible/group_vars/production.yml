@@ -1,23 +1,22 @@
 ---
-postgresql_version: '17'
+postgresql_version: "17"
 postgresql_options:
-  - {name: listen_addresses, value: '*'}
-  - {name: logging_collector, value: off}
+  - { name: listen_addresses, value: "*" }
+  - { name: logging_collector, value: false }
 postgresql_databases: [production]
 postgresql_users:
-  - {db: production, name: postgres, password: "{{ lookup('ansible.builtin.env', 'POSTGRES_ADMIN_PASSWORD', default=undef()) }}"}
-  - {db: production, name: user, password: "{{ lookup('ansible.builtin.env', 'POSTGRES_USER_PASSWORD', default=undef()) }}"}
-  - {db: production, name: migrator, password: "{{ lookup('ansible.builtin.env', 'POSTGRES_MIGRATOR_PASSWORD', default=undef()) }}"}
+  - { db: production, name: postgres, password: "{{ lookup('ansible.builtin.env', 'POSTGRES_ADMIN_PASSWORD', default=undef()) }}" }
+  - { db: production, name: user, password: "{{ lookup('ansible.builtin.env', 'POSTGRES_USER_PASSWORD', default=undef()) }}" }
+  - { db: production, name: migrator, password: "{{ lookup('ansible.builtin.env', 'POSTGRES_MIGRATOR_PASSWORD', default=undef()) }}" }
 postgresql_schemas:
-  - {db: production, name: dotbot, owner: migrator}
+  - { db: production, name: dotbot, owner: migrator }
 postgresql_privs:
-  - {db: production, roles: user, privs: 'SELECT,INSERT,UPDATE', objs: ALL_IN_SCHEMA,
-     schema: dotbot}
-  - {db: production, roles: migrator, privs: ALL, type: schema, objs: 'public,dotbot'}
+  - { db: production, roles: user, privs: "SELECT,INSERT,UPDATE", objs: ALL_IN_SCHEMA, schema: dotbot }
+  - { db: production, roles: migrator, privs: ALL, type: schema, objs: "public,dotbot" }
 postgresql_hba_entries:
-  - {contype: host, databases: production, users: all, address: 0.0.0.0/0, method: scram-sha-256}
+  - { contype: host, databases: production, users: all, address: 0.0.0.0/0, method: scram-sha-256 }
 postgresql_extensions:
-  - {db: production, name: hstore}
+  - { db: production, name: hstore }
 
 pgbackrest_owner: postgres
 pgbackrest_group: postgres
@@ -33,5 +32,5 @@ pgbackrest_async_archive_process_max: 2
 pgbackrest_global_config:
   log-level-file: info
   log-level-console: info
-  start-fast: y
-  delta: y
+  start-fast: true
+  delta: true

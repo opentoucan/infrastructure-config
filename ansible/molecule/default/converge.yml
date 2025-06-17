@@ -29,9 +29,7 @@
         image: minio/mc:latest
         state: started
         entrypoint: /bin/sh
-        command: mc alias set myminio http://minio:9000 admin admin && \
-                 mc mb myminio/pgbackrest && \
-                 mc anonymous set public myminio/pgbackrest
+        command: mc alias set myminio http://minio:9000 admin admin && \ mc mb myminio/pgbackrest && \ mc anonymous set public myminio/pgbackrest
         log_driver: json-file
       changed_when: "'molecule-idempotence-notest' not in ansible_skip_tags"
 
