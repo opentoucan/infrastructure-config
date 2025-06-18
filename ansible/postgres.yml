@@ -141,26 +141,26 @@
 
     - name: Remove old services
       ansible.builtin.file:
-        path: /etc/systemd/system/pgbackrest-{{ cluster_name }}-{{ backup_type }}.service
+        path: /etc/systemd/system/pgbackrest-{{ stanza_name }}-{{ backup_type }}.service
         state: absent
       vars:
-        cluster_name: "{{ item.0.name }}"
+        stanza_name: "{{ item.0.name }}"
         backup_type: "{{ item.1.backup_type }}"
       loop: "{{ pgbackrest_stanzas | subelements('schedules', skip_missing=True) }}"
       loop_control:
-        label: "{{ name }} [{{ backup_type }}]"
+        label: "{{ stanza_name }} [{{ backup_type }}]"
       notify: reload systemd
 
     - name: Remove old timers
       ansible.builtin.file:
-        path: /etc/systemd/system/pgbackrest-{{ cluster_name }}-{{ backup_type }}.timer
+        path: /etc/systemd/system/pgbackrest-{{ stanza_name }}-{{ backup_type }}.timer
         state: absent
       vars:
-        cluster_name: "{{ item.0.name }}"
+        stanza_name: "{{ item.0.name }}"
         backup_type: "{{ item.1.backup_type }}"
       loop: "{{ pgbackrest_stanzas | subelements('schedules', skip_missing=True) }}"
       loop_control:
-        label: "{{ cluster_name }} [{{ backup_type }}]"
+        label: "{{ stanza_name }} [{{ backup_type }}]"
       notify: reload systemd
 
     - name: Configure services and timers
