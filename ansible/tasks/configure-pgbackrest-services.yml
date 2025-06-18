@@ -26,7 +26,7 @@
   loop: "{{ pgbackrest_stanzas | subelements('schedules', skip_missing=True) }}"
   loop_control:
     label: "{{ stanza_name }}-{{ backup_type }}-repo{{ repo }}"
-  notify: reload systemd
+  notify: Reload systemd
 
 - name: Install timers
   ansible.builtin.template:
@@ -43,7 +43,7 @@
   loop_control:
     label: "{{ stanza_name }}-{{ backup_type }}-repo{{ repo }}"
   register: __installed_timers
-  notify: reload systemd
+  notify: Reload systemd
 
 - name: Flush handlers
   ansible.builtin.meta: flush_handlers

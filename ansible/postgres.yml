@@ -149,7 +149,7 @@
       loop: "{{ pgbackrest_stanzas | subelements('schedules', skip_missing=True) }}"
       loop_control:
         label: "{{ stanza_name }} [{{ backup_type }}]"
-      notify: reload systemd
+      notify: Reload systemd
 
     - name: Remove old timers
       ansible.builtin.file:
@@ -161,7 +161,7 @@
       loop: "{{ pgbackrest_stanzas | subelements('schedules', skip_missing=True) }}"
       loop_control:
         label: "{{ stanza_name }} [{{ backup_type }}]"
-      notify: reload systemd
+      notify: Reload systemd
 
     - name: Configure services and timers
       ansible.builtin.include_tasks: tasks/configure-pgbackrest-services.yml
