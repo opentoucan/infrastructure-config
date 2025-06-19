@@ -1,0 +1,61 @@
+---
+- name: Restart postgresql
+  ansible.builtin.systemd:
+    name: postgresql
+    state: restarted
+
+- name: Create Stanzas
+  listen: reconfigure pgbackrest
+  become: true
+  become_user: "{{ pgbackrest_owner }}"
+  ansible.builtin.command: pgbackrest --stanza={{ item.name }} stanza-create
+  loop: "{{ pgbackrest_stanzas }}"
+  loop_control:
+    label: "{{ item.name }}"
+  register: create_stanza
+  changed_when: create_stanza.rc != 0
+  # molecule doesn't have postgres running
+  when:
+    - "'notest' not in ansible_skip_tags"
+    - "'recovery-option' not in item.get('extra', {})"
+
+- name: Restore standby from backup
+  when:
+    - "'notest' not in ansible_skip_tags"
+    # Only run if there's at least one stanza with recovery-option set
+    - pgbackrest_stanzas | json_query('[*].extra."recovery-option"')
+    - pgbackrest_restore_standby | bool
+  block:
+    - name: Stop database
+      listen: reconfigure pgbackrest
+      ansible.builtin.systemd:
+        name: "postgresql-{{ postgresql_version }}"
+        state: stopped
+
+    - name: Restore standby
+      listen: reconfigure pgbackrest
+      become: true
+      become_user: "{{ pgbackrest_owner }}"
+      ansible.builtin.command: >
+        pgbackrest
+        --stanza={{ item.name }}
+        --repo={{ item.restore_repo | default('1') }}
+        --delta
+        --type=standby restore
+      loop: "{{ pgbackrest_stanzas }}"
+      loop_control:
+        label: "{{ item.name }}"
+      register: restore_postgres
+      changed_when: restore_postgres.rc != 0
+      when:
+        - "'recovery-option' in item.get('extra', {})"
+
+    - name: Start database
+      listen: reconfigure pgbackrest
+      ansible.builtin.systemd:
+        name: "postgresql-{{ postgresql_version }}"
+        state: started
+
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true

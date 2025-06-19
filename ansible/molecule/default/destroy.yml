@@ -1,0 +1,17 @@
+---
+- name: Destroy molecule containers
+  hosts: molecule
+  gather_facts: false
+  tasks:
+    - name: Stop and remove minio container
+      delegate_to: localhost
+      community.docker.docker_container:
+        name: minio
+        state: absent
+        auto_remove: true
+    - name: Stop and remove bucket-creation container
+      delegate_to: localhost
+      community.docker.docker_container:
+        name: bucket-creation
+        state: absent
+        auto_remove: true

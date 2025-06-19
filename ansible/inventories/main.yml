@@ -1,6 +1,6 @@
 ---
-all:
+postgres:
   children:
-    postgres:
+    production:
       hosts:
         postgres.opentoucan.com:

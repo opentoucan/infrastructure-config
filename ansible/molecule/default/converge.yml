@@ -1,0 +1,51 @@
+---
+# - name: Include a playbook from a collection
+#   ansible.builtin.import_playbook: opentoucan.infrastructure.postgres
+- name: Fail if molecule group is missing
+  hosts: localhost
+  tasks:
+    - name: Print some info
+      ansible.builtin.debug:
+        msg: "{{ groups }}"
+
+    - name: Create minio container for pgbackrest
+      community.docker.docker_container:
+        name: minio
+        image: minio/minio:latest
+        state: started
+        command: server /data
+        log_driver: json-file
+        env:
+          MINIO_ROOT_USER: admin
+          MINIO_ROOT_PASSWORD: admin
+        ports:
+          - 9000:9000
+          - 9001:9001
+      changed_when: "'molecule-idempotence-notest' not in ansible_skip_tags"
+
+    - name: Create minio buckets
+      community.docker.docker_container:
+        name: bucket-creation
+        image: minio/mc:latest
+        state: started
+        entrypoint: /bin/sh
+        command: mc alias set myminio http://minio:9000 admin admin && \ mc mb myminio/pgbackrest && \ mc anonymous set public myminio/pgbackrest
+        log_driver: json-file
+      changed_when: "'molecule-idempotence-notest' not in ansible_skip_tags"
+
+- name: Converge
+  hosts: all
+  # We disable gather facts because it would fail due to our container not
+  # having python installed. This will not prevent use from running 'raw'
+  # commands. Most molecule users are expected to use containers that already
+  # have python installed in order to avoid notable delays installing it.
+  gather_facts: false
+  tasks:
+    - name: Install gnupg
+      ansible.builtin.apt:
+        name: gnupg
+        state: present
+        update_cache: true
+
+- name: Postgres Playbook
+  import_playbook: ../../postgres.yml

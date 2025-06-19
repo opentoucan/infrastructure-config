@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/devcontainers/base:noble
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-ENV pip_packages "yamllint ansible molecule molecule-plugins[docker]"
+ENV pip_packages "ansible molecule molecule-plugins[docker]"
 
 RUN install -m 0755 -d /etc/apt/keyrings \
     && curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc \
@@ -29,6 +29,7 @@ RUN apt-get update \
        software-properties-common \
        rsyslog systemd systemd-cron sudo iproute2 \
        docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
+       gnupg \
     && apt-get clean \
     && rm -Rf /var/lib/apt/lists/* \
     && rm -Rf /usr/share/doc && rm -Rf /usr/share/man
