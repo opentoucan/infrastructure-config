@@ -1,6 +1,7 @@
 ---
 version: 3
 automerge: true
+automerge-method: squash
 autodiscover:
   mode: auto
 abort_on_execution_order_fail: true
