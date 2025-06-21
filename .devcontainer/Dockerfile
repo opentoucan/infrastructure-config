@@ -29,6 +29,7 @@ RUN apt-get update \
        software-properties-common \
        rsyslog systemd systemd-cron sudo iproute2 \
        docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
+       fuse-overlayfs \
        gnupg \
     && apt-get clean \
     && rm -Rf /var/lib/apt/lists/* \
