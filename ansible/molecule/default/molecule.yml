@@ -13,6 +13,8 @@ platforms:
     command: /lib/systemd/systemd
     config:
       requirements-file: requirements.yml
+    networks:
+      - name: molecule
 
 provisioner:
   name: ansible
@@ -25,7 +27,7 @@ provisioner:
     POSTGRES_ADMIN_PASSWORD: molecule
     POSTGRES_MIGRATOR_PASSWORD: molecule
     POSTGRES_USER_PASSWORD: molecule
-    S3_BACKUP_KEY: admin
-    S3_BACKUP_SECRET: admin
+    S3_BACKUP_KEY: minioadmin
+    S3_BACKUP_SECRET: minioadmin
 verifier:
   name: ansible

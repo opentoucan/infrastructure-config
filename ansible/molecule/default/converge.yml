@@ -8,19 +8,35 @@
       ansible.builtin.debug:
         msg: "{{ groups }}"
 
+    - name: Download gencert
+      ansible.builtin.shell:
+        cd /tmp
+        && wget https://github.com/minio/certgen/releases/download/v1.3.0/certgen-linux-amd64 \
+        && chmod +x certgen-linux-amd64 \
+        && mkdir -p /minio/certs
+        && ./certgen-linux-amd64 -host "127.0.0.1,localhost,minio"
+        && mv private.key public.crt /minio/certs
+      changed_when: "'molecule-idempotence-notest' not in ansible_skip_tags"
+
     - name: Create minio container for pgbackrest
       community.docker.docker_container:
         name: minio
         image: minio/minio:latest
         state: started
-        command: server /data
+        command: server /data --certs-dir /certs
         log_driver: json-file
         env:
-          MINIO_ROOT_USER: admin
-          MINIO_ROOT_PASSWORD: admin
+          MINIO_ROOT_USER: minioadmin
+          MINIO_ROOT_PASSWORD: minioadmin
         ports:
           - 9000:9000
           - 9001:9001
+        networks:
+          - name: molecule
+        mounts:
+          - type: bind
+            source: /minio/certs
+            target: /certs
       changed_when: "'molecule-idempotence-notest' not in ansible_skip_tags"
 
     - name: Create minio buckets
@@ -29,8 +45,10 @@
         image: minio/mc:latest
         state: started
         entrypoint: /bin/sh
-        command: mc alias set myminio http://minio:9000 admin admin && \ mc mb myminio/pgbackrest && \ mc anonymous set public myminio/pgbackrest
+        command: -c "mc alias set myminio https://minio:9000 minioadmin minioadmin --insecure && mc mb myminio/pgbackrest --insecure && mc anonymous set public myminio/pgbackrest --insecure"
         log_driver: json-file
+        networks:
+          - name: molecule
       changed_when: "'molecule-idempotence-notest' not in ansible_skip_tags"
 
 - name: Converge

@@ -2,7 +2,11 @@
 Description=PgBackRest Backup Job For Stanza {{ stanza_name }} repo {{ repo }} [{{ backup_type }}]
 
 [Timer]
+{% if onstartupsec is not none %}
+OnStartupSec={{ onstartupsec }}
+{% else %}
 OnCalendar={{ oncalendar }}
+{% endif %}
 Persistent=true
 RandomizedDelaySec={{ pgbackrest_timer_random_delay }}
 

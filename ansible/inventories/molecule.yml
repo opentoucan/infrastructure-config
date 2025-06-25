@@ -8,6 +8,8 @@ postgres:
     postgresql_options:
       - { name: listen_addresses, value: "*" }
       - { name: logging_collector, value: off }
+      - { name: archive_mode, value: "on" }
+      - { name: archive_command, value: "pgbackrest --stanza=backup archive-push %p" }
     postgresql_databases: [molecule]
     postgresql_users:
       - { db: molecule, name: postgres, password: "molecule" }
@@ -43,25 +45,27 @@ postgres:
       - name: backup
         pg_config:
           # Local pg server
-          - path: "/var/lib/pgsql/{{ postgresql_version }}/data"
+          - path: "/var/lib/postgresql/{{ postgresql_version }}/main"
         schedules:
           - backup_type: full
-            oncalendar: "Weekly"
+            onstartupsec: "1"
           - backup_type: diff
-            oncalendar: "Daily"
+            onstartupsec: "1"
         extra:
-          backup-standby: "y"
+          backup-standby: "n"
     pgbackrest_conf_extra: |
       [global:archive-push]
       compress-level=3
     pgbackrest_repos:
       # Backup to S3
-      - path: "/var/lib/pgbackrest"
+      - path: "/pgbackrest"
         retention-full: "7"
         retention-diff: "3"
         type: s3
         s3-bucket: pgbackrest
-        s3-endpoint: localhost
+        s3-endpoint: minio:9000
         s3-region: us-west-1
         s3-key: "{{ lookup('ansible.builtin.env', 'S3_BACKUP_KEY', default=undef()) }}"
         s3-key-secret: "{{ lookup('ansible.builtin.env', 'S3_BACKUP_SECRET', default=undef()) }}"
+        s3-uri-style: path
+        storage-verify-tls: n

@@ -13,23 +13,15 @@
   loop_control:
     label: "{{ item.name }}"
   register: create_stanza
-  changed_when: create_stanza.rc != 0
-  # molecule doesn't have postgres running
-  when:
-    - "'notest' not in ansible_skip_tags"
-    - "'recovery-option' not in item.get('extra', {})"
-
 - name: Restore standby from backup
   when:
-    - "'notest' not in ansible_skip_tags"
-    # Only run if there's at least one stanza with recovery-option set
     - pgbackrest_stanzas | json_query('[*].extra."recovery-option"')
     - pgbackrest_restore_standby | bool
   block:
     - name: Stop database
       listen: reconfigure pgbackrest
       ansible.builtin.systemd:
-        name: "postgresql-{{ postgresql_version }}"
+        name: postgresql
         state: stopped
 
     - name: Restore standby
@@ -53,7 +45,7 @@
     - name: Start database
       listen: reconfigure pgbackrest
       ansible.builtin.systemd:
-        name: "postgresql-{{ postgresql_version }}"
+        name: postgresql
         state: started
 
 - name: Reload systemd
