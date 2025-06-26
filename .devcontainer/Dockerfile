@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/devcontainers/base:noble
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-ENV pip_packages "ansible molecule molecule-plugins[docker]"
+ENV pip_packages "ansible molecule molecule-plugins[docker] jmespath"
 
 RUN install -m 0755 -d /etc/apt/keyrings \
     && curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc \

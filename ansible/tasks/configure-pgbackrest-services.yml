@@ -39,6 +39,7 @@
     stanza_name: "{{ item.0.name }}"
     backup_type: "{{ item.1.backup_type }}"
     oncalendar: "{{ item.1.oncalendar }}"
+    onstartupsec: "{{ item.1.onstartupsec }}"
   loop: "{{ pgbackrest_stanzas | subelements('schedules', skip_missing=True) }}"
   loop_control:
     label: "{{ stanza_name }}-{{ backup_type }}-repo{{ repo }}"

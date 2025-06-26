@@ -13,3 +13,17 @@
       ansible.builtin.command: pg_isready -d molecule
       register: postgres_ready
       changed_when: postgres_ready.rc != 0
+
+    - name: Get backup logs
+      ansible.builtin.shell: 'journalctl -u pgbackrest-backup-full-repo1'
+      register: backup_logs
+
+    - name: Get successful backup log line
+      ansible.builtin.shell: "journalctl -u pgbackrest-backup-full-repo1 | grep 'backup command end: completed successfully' || true"
+      ignore_errors: true
+      register: backup_success
+
+    - name: Fail if exit code is not success
+      ansible.builtin.fail:
+        msg: '{{ backup_logs }}'
+      when: backup_success.stdout == ""

@@ -3,6 +3,8 @@ postgresql_version: "17"
 postgresql_options:
   - { name: listen_addresses, value: "*" }
   - { name: logging_collector, value: false }
+  - { name: archive_mode, value: "on" }
+  - { name: archive_command, value: "pgbackrest --stanza=backup archive-push %p" }
 postgresql_databases: [production]
 postgresql_users:
   - { db: production, name: postgres, password: "{{ lookup('ansible.builtin.env', 'POSTGRES_ADMIN_PASSWORD', default=undef()) }}" }
@@ -32,5 +34,33 @@ pgbackrest_async_archive_process_max: 2
 pgbackrest_global_config:
   log-level-file: info
   log-level-console: info
-  start-fast: true
-  delta: true
+  start-fast: y
+  delta: y
+pgbackrest_stanzas:
+  - name: backup
+    pg_config:
+      # Local pg server
+      - path: "/var/lib/postgresql/{{ postgresql_version }}/main"
+    schedules:
+      - backup_type: full
+        oncalendar: "weekly"
+      - backup_type: diff
+        oncalendar: "daily"
+    extra:
+      backup-standby: "n"
+pgbackrest_conf_extra: |
+  [global:archive-push]
+  compress-level=3
+pgbackrest_repos:
+  # Backup to S3
+  - path: "/pgbackrest"
+    retention-full: "7"
+    retention-diff: "3"
+    type: s3
+    s3-bucket: pgbackrest
+    s3-endpoint: minio:9000
+    s3-region: us-west-1
+    s3-key: "{{ lookup('ansible.builtin.env', 'S3_BACKUP_KEY', default=undef()) }}"
+    s3-key-secret: "{{ lookup('ansible.builtin.env', 'S3_BACKUP_SECRET', default=undef()) }}"
+    s3-uri-style: path
+    storage-verify-tls: n

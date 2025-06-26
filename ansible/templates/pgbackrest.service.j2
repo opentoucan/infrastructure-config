@@ -1,7 +1,7 @@
 [Unit]
 Description=PgBackRest for stanza {{ stanza_name }} repo {{ repo }} [{{ backup_type }}]
 {% if pgbackrest_local_postgresql | bool %}
-ConditionPathIsDirectory=/var/lib/pgsql/{{ postgresql_version }}/data
+ConditionPathIsDirectory=/var/lib/postgresql/{{ postgresql_version }}/main
 {% endif %}
 
 [Service]
