@@ -47,7 +47,7 @@ pgbackrest_stanzas:
       - backup_type: diff
         oncalendar: "daily"
     extra:
-        backup-standby: "n"
+      backup-standby: "n"
 pgbackrest_conf_extra: |
   [global:archive-push]
   compress-level=3

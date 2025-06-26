@@ -38,7 +38,6 @@
       loop_control:
         label: "{{ item.name }}"
       register: restore_postgres
-      changed_when: restore_postgres.rc != 0
       when:
         - "'recovery-option' in item.get('extra', {})"
 

@@ -4,7 +4,7 @@ rules:
   truthy:
     allowed-values: ["true", "false", "on", "off", "yes", "no"]
   line-length:
-    max: 150
+    max: 200
   comments:
     min-spaces-from-content: 1
   comments-indentation: false
