@@ -13,9 +13,9 @@
         cd /tmp
         && wget https://github.com/minio/certgen/releases/download/v1.3.0/certgen-linux-amd64 \
         && chmod +x certgen-linux-amd64 \
-        && mkdir -p /minio/certs
+        && mkdir -p /tmp/minio/certs
         && ./certgen-linux-amd64 -host "127.0.0.1,localhost,minio"
-        && mv private.key public.crt /minio/certs
+        && mv private.key public.crt /tmp/minio/certs
       changed_when: "'molecule-idempotence-notest' not in ansible_skip_tags"
 
     - name: Create minio container for pgbackrest
@@ -35,7 +35,7 @@
           - name: molecule
         mounts:
           - type: bind
-            source: /minio/certs
+            source: /tmp/minio/certs
             target: /certs
       changed_when: "'molecule-idempotence-notest' not in ansible_skip_tags"
 
