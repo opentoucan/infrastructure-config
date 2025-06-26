@@ -2,7 +2,7 @@
 Description=PgBackRest Backup Job For Stanza {{ stanza_name }} repo {{ repo }} [{{ backup_type }}]
 
 [Timer]
-{% if onstartupsec is not none %}
+{% if onstartupsec is not defined %}
 OnStartupSec={{ onstartupsec }}
 {% else %}
 OnCalendar={{ oncalendar }}
