@@ -13,6 +13,8 @@
   loop_control:
     label: "{{ item.name }}"
   register: create_stanza
+  changed_when: create_stanza.rc != 0
+
 - name: Restore standby from backup
   when:
     - pgbackrest_stanzas | json_query('[*].extra."recovery-option"')
@@ -38,6 +40,7 @@
       loop_control:
         label: "{{ item.name }}"
       register: restore_postgres
+      changed_when: restore_postgres.rc != 0
       when:
         - "'recovery-option' in item.get('extra', {})"
 
