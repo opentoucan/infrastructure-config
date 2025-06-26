@@ -38,7 +38,7 @@
   vars:
     stanza_name: "{{ item.0.name }}"
     backup_type: "{{ item.1.backup_type }}"
-    oncalendar: "{{ item.1.oncalendar }}"
+    oncalendar: "{{ item.1.oncalendar | default(omit, true)}}"
     onstartupsec: "{{ item.1.onstartupsec | default(omit, true)}}"
   loop: "{{ pgbackrest_stanzas | subelements('schedules', skip_missing=True) }}"
   loop_control:
