@@ -14,7 +14,7 @@ terraform {
     }
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "5.7.1"
+      version = "5.8.2"
     }
     dns = {
       source  = "opentofu/dns"
