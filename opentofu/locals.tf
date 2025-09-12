@@ -17,6 +17,12 @@ locals {
     {
       direction  = "in"
       protocol   = "tcp"
+      port       = "22"
+      source_ips = local.ip_access_list
+    },
+    {
+      direction  = "in"
+      protocol   = "tcp"
       port       = "5432"
       source_ips = local.ip_access_list
     }
