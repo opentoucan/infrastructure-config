@@ -44,19 +44,7 @@ hcloud_ssh_keys = [
 hcloud_firewall_rules = [
   {
     direction  = "in"
-    protocol   = "tcp"
-    port       = "22"
-    source_ips = ["0.0.0.0/0", "::/0"]
-  },
-  {
-    direction  = "in"
     protocol   = "icmp"
-    source_ips = ["0.0.0.0/0", "::/0"]
-  },
-  {
-    direction  = "in"
-    protocol   = "tcp"
-    port       = "5432"
     source_ips = ["0.0.0.0/0", "::/0"]
   }
 ]
