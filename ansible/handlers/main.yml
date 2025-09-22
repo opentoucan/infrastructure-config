@@ -17,7 +17,7 @@
 
 - name: Restore standby from backup
   when:
-    - pgbackrest_stanzas | json_query('[*].extra."recovery-option"')
+    - pgbackrest_stanzas | json_query('[*].extra."recovery-option"') != None
     - pgbackrest_restore_standby | bool
   block:
     - name: Stop database
