@@ -27,3 +27,10 @@
       ansible.builtin.fail:
         msg: '{{ backup_logs }}'
       when: backup_success.stdout == ""
+
+    - name: Check pgbackrest exporter is enabled
+      ansible.builtin.shell: systemctl is-active prometheus-pgbackrest-exporter
+
+    - name: Check prometheus scrape port 9854
+      ansible.builtin.wait_for:
+        port: 9854

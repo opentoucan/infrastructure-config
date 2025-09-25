@@ -16,6 +16,18 @@
         create: true
         mode: "0600"
 
+    - name: Add Apt master signing key
+      ansible.builtin.apt_key:
+        url: https://ftp-master.debian.org/keys/archive-key-13.asc
+        state: present
+
+    - name: Add pgdg repo to sources.list.d
+      ansible.builtin.lineinfile:
+        path: /etc/apt/sources.list.d/deb.list
+        line: deb https://deb.debian.org/debian/ unstable main contrib non-free-firmware
+        create: true
+        mode: "0600"
+
     - name: Download PostgreSQL key and add it to system keyring
       ansible.builtin.apt_key:
         url: https://www.postgresql.org/media/keys/ACCC4CF8.asc

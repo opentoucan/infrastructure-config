@@ -4,6 +4,19 @@
     name: postgresql
     state: restarted
 
+- name: Restart pgbackrest exporter
+  ansible.builtin.systemd:
+    name: prometheus-pgbackrest-exporter
+    state: restarted
+  listen: restart pgbackrest exporter
+
+- name: Start and enable the service
+  ansible.builtin.systemd:
+    name: prometheus-pgbackrest-exporter.service
+    state: started
+    enabled: true
+  listen: restart pgbackrest exporter
+
 - name: Create Stanzas
   listen: reconfigure pgbackrest
   become: true

@@ -63,3 +63,11 @@
   when:
     - __installed_timers is defined
     - item.dest is defined or item.invocation.dest is defined
+
+- name: Install pgbackrest prometheus exporter
+  ansible.builtin.apt:
+    name: prometheus-pgbackrest-exporter
+    default_release: unstable
+    state: present
+    update_cache: true
+  notify: restart pgbackrest exporter
