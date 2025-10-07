@@ -1,15 +1,14 @@
 resource "mongodbatlas_project" "project" {
   name   = var.project_name
   org_id = var.org_id
+}
 
-  dynamic "teams" {
-    for_each = tomap(var.teams)
-    iterator = item
-    content {
-      team_id    = item.key
-      role_names = item.value.roles
-    }
-  }
+resource "mongodbatlas_team_project_assignment" "team_project_assignment" {
+  for_each = tomap(var.teams)
+  project_id = mongodbatlas_project.project.id
+  team_id = each.key
+  role_names = each.value.roles
+
 }
 
 resource "mongodbatlas_project_ip_access_list" "ip_access_list" {
