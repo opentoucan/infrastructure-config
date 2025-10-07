@@ -10,11 +10,11 @@ terraform {
     }
     hcloud = {
       source  = "hetznercloud/hcloud"
-      version = "1.53.0"
+      version = "1.54.0"
     }
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "5.10.1"
+      version = "5.11.0"
     }
     dns = {
       source  = "opentofu/dns"
