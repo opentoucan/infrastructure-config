@@ -3,11 +3,11 @@ resource "mongodbatlas_advanced_cluster" "cluster" {
     for cluster in var.clusters :
     cluster.name => cluster
   }
-  project_id     = mongodbatlas_project.project.id
-  name           = each.value.name
-  cluster_type   = each.value.cluster_type
-  backup_enabled = each.value.backup_enabled
-
+  project_id        = mongodbatlas_project.project.id
+  name              = each.value.name
+  cluster_type      = each.value.cluster_type
+  backup_enabled    = each.value.backup_enabled
+  mongo_db_version  = "8.0.14"
   replication_specs = [
     {
       region_configs = [
