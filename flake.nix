@@ -20,6 +20,7 @@
           yamllint
           ansible
           atlantis
+          mongodb-tools
         ];
 
       };
