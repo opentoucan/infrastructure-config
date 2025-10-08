@@ -7,7 +7,6 @@ resource "mongodbatlas_advanced_cluster" "cluster" {
   name              = each.value.name
   cluster_type      = each.value.cluster_type
   backup_enabled    = each.value.backup_enabled
-  mongo_db_version  = "8.0.14"
   replication_specs = [
     {
       region_configs = [
@@ -18,7 +17,6 @@ resource "mongodbatlas_advanced_cluster" "cluster" {
           priority              = each.value.priority
           electable_specs = {
             instance_size = each.value.instance_size
-            node_count    = 1
           }
         }
       ]
