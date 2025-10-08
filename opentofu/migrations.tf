@@ -1,4 +1,7 @@
-moved {
+removed {
   from = module.mongodb.mongodbatlas_cluster.cluster
-  to   = module.mongodb.mongodbatlas_advanced_cluster.cluster
+
+  lifecycle {
+    destroy = false
+  }
 }
