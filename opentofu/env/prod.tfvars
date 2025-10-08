@@ -5,9 +5,10 @@ mongodbatlas_clusters = [{
   region_name           = "EUROPE_NORTH"
   provider_name         = "TENANT"
   backing_provider_name = "AZURE"
-  provider_instance     = "M0"
+  instance_size         = "M0"
   cluster_type          = "REPLICASET"
-  cloud_backup          = false
+  backup_enabled        = false
+  priority              = 7
 }]
 mongodbatlas_team_roles = [
   {
