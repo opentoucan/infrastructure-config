@@ -3,7 +3,7 @@ resource "mongodbatlas_project" "project" {
   org_id = var.org_id
 
   lifecycle {
-    ignore_changes = ["teams"]
+    ignore_changes = [teams]
   }
 }
 
