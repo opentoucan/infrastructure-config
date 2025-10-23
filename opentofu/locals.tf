@@ -9,8 +9,8 @@ locals {
   s3_bucket_endpoint = "${var.s3_bucket_region}.${var.s3_bucket_domain}"
 
   ip_access_list = flatten([
-    for key in var.dns_access_list :
-    data.dns_a_record_set.access_ips[key].addrs
+    for key in var.ip_access_list :
+    module.ip.ip
   ])
 
   hcloud_postgres_firewall_rules = [
