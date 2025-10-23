@@ -88,7 +88,7 @@ variable "hcloud_firewall_rules" {
   }))
 }
 
-variable "dns_access_list" {
+variable "ip_access_list" {
   type        = list(string)
-  description = "DNS record list for whitelisting access to restricted resources such as the Postgres database"
+  description = "IP or DNS record list for whitelisting access to restricted resources"
 }

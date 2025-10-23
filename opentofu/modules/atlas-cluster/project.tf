@@ -17,7 +17,7 @@ resource "mongodbatlas_team_project_assignment" "team_project_assignment" {
 }
 
 resource "mongodbatlas_project_ip_access_list" "ip_access_list" {
-  for_each   = toset(var.ip_access_list)
+  for_each = toset(var.ip_access_list)
 
   project_id = mongodbatlas_project.project.id
   cidr_block = each.value

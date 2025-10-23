@@ -13,6 +13,8 @@
     {
       devShells."x86_64-linux".default = with pkgs; mkShell {
         packages = [
+          mise
+          postgresql
           opentofu
           molecule
           renovate

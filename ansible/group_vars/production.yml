@@ -7,10 +7,26 @@ postgresql_options:
   - { name: archive_command, value: "pgbackrest --stanza=backup archive-push %p" }
 postgresql_databases: [production]
 postgresql_users:
-  - { db: production, name: postgres, password: "{{ lookup('ansible.builtin.env', 'POSTGRES_ADMIN_PASSWORD', default=undef()) }}" }
-  - { db: production, name: user, password: "{{ lookup('ansible.builtin.env', 'POSTGRES_USER_PASSWORD', default=undef()) }}" }
-  - { db: production, name: migrator, password: "{{ lookup('ansible.builtin.env', 'POSTGRES_MIGRATOR_PASSWORD', default=undef()) }}" }
-  - { db: production, name: grafana, password: "{{ lookup('ansible.builtin.env', 'POSTGRES_GRAFANA_PASSWORD', default=undef()) }}" }
+  - db: production
+    name: postgres
+    password: "{{ lookup('ansible.builtin.env', 'POSTGRES_ADMIN_PASSWORD', default=undef()) }}"
+    configuration:
+      search_path: public
+  - db: production
+    name: user
+    password: "{{ lookup('ansible.builtin.env', 'POSTGRES_USER_PASSWORD', default=undef()) }}"
+    configuration:
+      search_path: dotbot
+  - db: production
+    name: migrator
+    password: "{{ lookup('ansible.builtin.env', 'POSTGRES_MIGRATOR_PASSWORD', default=undef()) }}"
+    configuration:
+      search_path: dotbot
+  - db: production
+    name: grafana
+    password: "{{ lookup('ansible.builtin.env', 'POSTGRES_GRAFANA_PASSWORD', default=undef()) }}"
+    configuration:
+      search_path: dotbot
 postgresql_schemas:
   - { db: production, name: dotbot, owner: migrator }
 postgresql_privs:
