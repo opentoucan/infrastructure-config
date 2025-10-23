@@ -10,7 +10,7 @@ locals {
 
   ip_access_list = flatten([
     for key in var.ip_access_list :
-    module.ip.ip
+    sensitive(data.http.ip.response_body)
   ])
 
   hcloud_postgres_firewall_rules = [

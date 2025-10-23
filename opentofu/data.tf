@@ -8,3 +8,7 @@ data "mongodbatlas_team" "teams" {
   org_id = data.mongodbatlas_roles_org_id.org.org_id
   name   = each.value.name
 }
+
+data "http" "ip" {
+  url = "https://ifconfig.me/ip"
+}
