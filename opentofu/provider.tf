@@ -12,6 +12,8 @@ provider "cloudflare" {}
 
 provider "dns" {}
 
+provider "http" {}
+
 module "mongodb" {
   source         = "./modules/atlas-cluster"
   org_id         = data.mongodbatlas_roles_org_id.org.org_id
