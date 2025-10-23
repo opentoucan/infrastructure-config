@@ -50,4 +50,4 @@ hcloud_firewall_rules = [
   }
 ]
 
-dns_access_list = ["ipv4.sillock.com"]
+ip_access_list = []
