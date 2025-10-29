@@ -56,7 +56,7 @@
         "mode": "markdown"
       },
       "pluginVersion": "12.1.0",
-      "title": "Atlantis",
+      "title": "Atlantis Server",
       "type": "text"
     },
     {
@@ -3069,7 +3069,7 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "New dashboard",
-  "uid": "a900c4b5-8712-4c1d-a896-2af23d99f5ac",
-  "version": 4
+  "title": "Atlantis - Overview",
+  "uid": "atlantis-overview",
+  "version": 5
 }
