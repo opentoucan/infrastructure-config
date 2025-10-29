@@ -20,7 +20,7 @@
 	],
   "updateRemoteUserUID": true,
 	"features": {
-		"ghcr.io/devcontainers/features/python:1.7.1": {},
+		"ghcr.io/devcontainers/features/python:1.8.0": {},
 		"ghcr.io/devcontainers-extra/features/yamllint:2": {},
 		"ghcr.io/hspaans/devcontainer-features/ansible-lint:2": {}
 	}
