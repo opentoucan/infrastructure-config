@@ -22,7 +22,7 @@ terraform {
     }
     dns = {
       source  = "opentofu/dns"
-      version = "3.4.3"
+      version = "3.5.0"
     }
   }
 }
