@@ -10,7 +10,7 @@ terraform {
     }
     minio = {
       source  = "aminueza/minio"
-      version = "3.41.0"
+      version = "3.42.0"
     }
     hcloud = {
       source  = "hetznercloud/hcloud"
