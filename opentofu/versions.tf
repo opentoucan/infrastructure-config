@@ -6,7 +6,7 @@ terraform {
     }
     mongodbatlas = {
       source  = "mongodb/mongodbatlas"
-      version = "2.10.0"
+      version = "2.20.1"
     }
     minio = {
       source  = "aminueza/minio"
