@@ -2,7 +2,7 @@ terraform {
   required_providers {
     http = {
       source  = "opentofu/http"
-      version = "3.5.0"
+      version = "3.6.3"
     }
     mongodbatlas = {
       source  = "mongodb/mongodbatlas"
